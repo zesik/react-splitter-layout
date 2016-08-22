@@ -2,7 +2,7 @@ import React from 'react';
 
 function Pane(props) {
   const size = props.size || 0;
-  let unit = props.percentage ? '%' : 'px';
+  const unit = props.percentage ? '%' : 'px';
   let classes = 'layout-pane';
   const style = {};
   if (!props.primary) {

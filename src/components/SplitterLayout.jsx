@@ -24,8 +24,8 @@ class SplitterLayout extends React.Component {
       const containerRect = this.container.getBoundingClientRect();
       const splitterRect = this.splitter.getBoundingClientRect();
       const secondaryPaneSize = this.getSecondaryPaneSize(containerRect, splitterRect, {
-        left: containerRect.left + (containerRect.width - splitterRect.width) / 2,
-        top: containerRect.height + (containerRect.height - splitterRect.height) / 2
+        left: containerRect.left + ((containerRect.width - splitterRect.width) / 2),
+        top: containerRect.height + ((containerRect.height - splitterRect.height) / 2)
       }, false);
       this.setState({ secondaryPaneSize });
     }
@@ -35,6 +35,51 @@ class SplitterLayout extends React.Component {
     window.removeEventListener('resize', this.handleResize);
     document.removeEventListener('mouseup', this.handleMouseUp);
     document.removeEventListener('mousemove', this.handleMouseMove);
+  }
+
+  getSecondaryPaneSize(containerRect, splitterRect, clientPosition, offsetMouse) {
+    let totalSize;
+    let splitterSize;
+    let offset;
+    if (this.props.vertical) {
+      totalSize = containerRect.height;
+      splitterSize = splitterRect.height;
+      offset = clientPosition.top - containerRect.top;
+    } else {
+      totalSize = containerRect.width;
+      splitterSize = splitterRect.width;
+      offset = clientPosition.left - containerRect.left;
+    }
+    if (offsetMouse) {
+      offset -= splitterSize / 2;
+    }
+    if (offset < 0) {
+      offset = 0;
+    } else if (offset > totalSize - splitterSize) {
+      offset = totalSize - splitterSize;
+    }
+
+    let secondaryPaneSize;
+    if (this.props.primaryIndex === 1) {
+      secondaryPaneSize = offset;
+    } else {
+      secondaryPaneSize = totalSize - splitterSize - offset;
+    }
+    let primaryPaneSize = totalSize - splitterSize - secondaryPaneSize;
+    if (this.props.percentage) {
+      secondaryPaneSize = (secondaryPaneSize * 100) / totalSize;
+      primaryPaneSize = (primaryPaneSize * 100) / totalSize;
+      splitterSize = (splitterSize * 100) / totalSize;
+      totalSize = 100;
+    }
+
+    if (primaryPaneSize < this.props.primaryMinSize) {
+      secondaryPaneSize = Math.max(secondaryPaneSize - (this.props.primaryMinSize - primaryPaneSize), 0);
+    } else if (secondaryPaneSize < this.props.secondaryMinSize) {
+      secondaryPaneSize = Math.min(totalSize - splitterSize - this.props.primaryMinSize, this.props.secondaryMinSize);
+    }
+
+    return secondaryPaneSize;
   }
 
   handleResize() {
@@ -72,49 +117,6 @@ class SplitterLayout extends React.Component {
 
   handleMouseUp() {
     this.setState({ resizing: false });
-  }
-
-  getSecondaryPaneSize(containerRect, splitterRect, clientPosition, offsetMouse) {
-    let totalSize, splitterSize, offset;
-    if (this.props.vertical) {
-      totalSize = containerRect.height;
-      splitterSize = splitterRect.height;
-      offset = clientPosition.top - containerRect.top;
-    } else {
-      totalSize = containerRect.width;
-      splitterSize = splitterRect.width;
-      offset = clientPosition.left - containerRect.left;
-    }
-    if (offsetMouse) {
-      offset -= splitterSize / 2;
-    }
-    if (offset < 0) {
-      offset = 0;
-    } else if (offset > totalSize - splitterSize) {
-      offset = totalSize - splitterSize;
-    }
-
-    let secondaryPaneSize;
-    if (this.props.primaryIndex === 1) {
-      secondaryPaneSize = offset;
-    } else {
-      secondaryPaneSize = totalSize - splitterSize - offset;
-    }
-    let primaryPaneSize = totalSize - splitterSize - secondaryPaneSize;
-    if (this.props.percentage) {
-      secondaryPaneSize = secondaryPaneSize * 100 / totalSize;
-      primaryPaneSize = primaryPaneSize * 100 / totalSize;
-      splitterSize = splitterSize * 100 / totalSize;
-      totalSize = 100;
-    }
-
-    if (primaryPaneSize < this.props.primaryMinSize) {
-      secondaryPaneSize = Math.max(secondaryPaneSize - (this.props.primaryMinSize - primaryPaneSize), 0);
-    } else if (secondaryPaneSize < this.props.secondaryMinSize) {
-      secondaryPaneSize = Math.min(totalSize - splitterSize - this.props.primaryMinSize, this.props.secondaryMinSize);
-    }
-
-    return secondaryPaneSize;
   }
 
   render() {
@@ -181,7 +183,7 @@ SplitterLayout.defaultProps = {
   percentage: false,
   primaryIndex: 0,
   primaryMinSize: 0,
-  secondaryMinSize: 0,
+  secondaryMinSize: 0
 };
 
 export default SplitterLayout;
