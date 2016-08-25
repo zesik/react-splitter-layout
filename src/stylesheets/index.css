@@ -17,7 +17,7 @@
   flex: 1 1 auto;
 }
 
-.splitter-layout .layout-splitter {
+.splitter-layout > .layout-splitter {
   flex: 0 0 auto;
   width: 4px;
   height: 100%;
@@ -33,7 +33,7 @@
   cursor: col-resize;
 }
 
-.splitter-layout.layout-changing .layout-splitter {
+.splitter-layout.layout-changing > .layout-splitter {
   background-color: #aaa;
 }
 
