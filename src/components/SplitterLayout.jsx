@@ -2,6 +2,18 @@ import React from 'react';
 import Pane from './Pane';
 import '../stylesheets/index.css';
 
+function clearSelection() {
+  if (window.getSelection) {
+    if (window.getSelection().empty) {
+      window.getSelection().empty();
+    } else if (window.getSelection().removeAllRanges) {
+      window.getSelection().removeAllRanges();
+    }
+  } else if (document.selection) {
+    document.selection.empty();
+  }
+}
+
 class SplitterLayout extends React.Component {
   constructor(props) {
     super(props);
@@ -102,16 +114,13 @@ class SplitterLayout extends React.Component {
         left: e.clientX,
         top: e.clientY
       }, true);
+      clearSelection();
       this.setState({ secondaryPaneSize });
     }
   }
 
   handleSplitterMouseDown() {
-    if (window.getSelection) {
-      window.getSelection().removeAllRanges();
-    } else if (document.selection) {
-      document.selection.empty();
-    }
+    clearSelection();
     this.setState({ resizing: true });
   }
 
