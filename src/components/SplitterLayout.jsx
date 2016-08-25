@@ -33,12 +33,17 @@ class SplitterLayout extends React.Component {
     document.addEventListener('mousemove', this.handleMouseMove);
 
     if (this.splitter) {
-      const containerRect = this.container.getBoundingClientRect();
-      const splitterRect = this.splitter.getBoundingClientRect();
-      const secondaryPaneSize = this.getSecondaryPaneSize(containerRect, splitterRect, {
-        left: containerRect.left + ((containerRect.width - splitterRect.width) / 2),
-        top: containerRect.top + ((containerRect.height - splitterRect.height) / 2)
-      }, false);
+      let secondaryPaneSize;
+      if (typeof this.props.secondaryInitialSize !== 'undefined') {
+        secondaryPaneSize = this.props.secondaryInitialSize;
+      } else {
+        const containerRect = this.container.getBoundingClientRect();
+        const splitterRect = this.splitter.getBoundingClientRect();
+        secondaryPaneSize = this.getSecondaryPaneSize(containerRect, splitterRect, {
+          left: containerRect.left + ((containerRect.width - splitterRect.width) / 2),
+          top: containerRect.top + ((containerRect.height - splitterRect.height) / 2)
+        }, false);
+      }
       this.setState({ secondaryPaneSize });
     }
   }
@@ -182,6 +187,7 @@ SplitterLayout.propTypes = {
   percentage: React.PropTypes.bool,
   primaryIndex: React.PropTypes.number,
   primaryMinSize: React.PropTypes.number,
+  secondaryInitialSize: React.PropTypes.number,
   secondaryMinSize: React.PropTypes.number,
   children: React.PropTypes.arrayOf(React.PropTypes.node)
 };
