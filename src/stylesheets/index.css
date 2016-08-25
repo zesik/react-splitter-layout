@@ -10,7 +10,7 @@
 .splitter-layout .layout-pane {
   position: relative;
   flex: 0 0 auto;
-  overflow: scroll;
+  overflow: auto;
 }
 
 .splitter-layout .layout-pane.layout-pane-primary {
