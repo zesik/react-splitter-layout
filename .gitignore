@@ -1,0 +1,16 @@
+# OS
+.DS_Store
+
+# IDE
+.idea/
+.vscode/
+
+# Build Output
+build/
+coverage/
+lib/
+.nyc_output/
+
+# NPM
+node_modules/
+npm-debug.log*
