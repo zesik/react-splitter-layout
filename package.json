@@ -22,28 +22,28 @@
     "lib/*"
   ],
   "devDependencies": {
-    "babel-cli": "^6.10.1",
-    "babel-core": "^6.10.4",
-    "babel-loader": "^6.2.4",
-    "babel-preset-es2015": "^6.9.0",
+    "babel-core": "^6.13.2",
+    "babel-loader": "^6.2.5",
+    "babel-plugin-istanbul": "^2.0.0",
+    "babel-preset-es2015": "^6.14.0",
     "babel-preset-react": "^6.11.1",
-    "babel-register": "^6.9.0",
-    "coveralls": "^2.11.11",
-    "css-loader": "^0.23.1",
+    "babel-register": "^6.14.0",
+    "coveralls": "^2.11.12",
+    "css-loader": "^0.24.0",
     "eslint": "^3.3.1",
     "eslint-config-airbnb": "^10.0.1",
-    "eslint-plugin-import": "^1.10.3",
+    "eslint-plugin-import": "^1.14.0",
     "eslint-plugin-jsx-a11y": "^2.1.0",
     "eslint-plugin-react": "^6.1.2",
     "expect": "^1.20.2",
     "ignore-styles": "^4.0.0",
-    "isparta": "^4.0.0",
     "jsdomify": "^2.1.0",
     "mocha": "^3.0.2",
     "mocha-lcov-reporter": "^1.2.0",
-    "react": "^15.2.1",
-    "react-addons-test-utils": "^15.2.1",
-    "react-dom": "^15.2.1",
+    "nyc": "^8.1.0",
+    "react": "^15.3.1",
+    "react-addons-test-utils": "^15.3.1",
+    "react-dom": "^15.3.1",
     "react-router": "^2.7.0",
     "style-loader": "^0.13.1",
     "webpack": "^1.13.2"
@@ -54,8 +54,8 @@
   "scripts": {
     "prepublish": "webpack --progress -p",
     "build": "webpack --progress",
-    "test": "mocha --compilers js:babel-register --require ignore-styles test/*.spec.js*",
-    "coverage": "babel-node node_modules/isparta/bin/isparta cover --include 'src/**/*.js*' --report lcov node_modules/mocha/bin/_mocha -- --compilers js:babel-register --reporter spec --require ignore-styles test/*.spec.js*",
-    "travis-coverage": "babel-node node_modules/isparta/bin/isparta cover --include 'src/**/*.js*' --report lcovonly node_modules/mocha/bin/_mocha -- --compilers js:babel-register --reporter spec --require ignore-styles test/*.spec.js* && cat coverage/lcov.info | node_modules/coveralls/bin/coveralls.js && rm -rf coverage"
+    "test": "mocha --require babel-register --require ignore-styles test/*.spec.js*",
+    "coverage": "nyc --extension .jsx npm test",
+    "coveralls": "nyc report --reporter=text-lcov | coveralls"
   }
 }

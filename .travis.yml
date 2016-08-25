@@ -8,4 +8,6 @@ install:
   - npm install
 script:
   - npm run build
-  - npm run travis-coverage
+after_success:
+  - npm run coverage
+  - npm run coveralls

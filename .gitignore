@@ -9,6 +9,7 @@
 build/
 coverage/
 lib/
+.nyc_output/
 
 # NPM
 node_modules/
