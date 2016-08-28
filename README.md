@@ -63,10 +63,10 @@ $ npm run coverage
 
 ## Usage
 
-Place each part of the layout under `SplitterLayout`.
-At most 2 child elements can be put into `SplitterLayout`. 3rd child element and on are ignored.
-If there is only one element in `SplitterLayout`, splitter is rendered and the child element occupies all space.
-
+Write two parts of the layout as direct children of your `SplitterLayout` element.
+`SplitterLayout` renders the first 2 direct children only if it has more than 2 direct children.
+`SplitterLayout` does not render splitter when it has only 1 direct children,
+and the only direct children occupies all available space.
 
 The `SplitterLayout` component supports the following props.
 
