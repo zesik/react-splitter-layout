@@ -54,6 +54,7 @@
   "scripts": {
     "prepublish": "webpack --progress -p",
     "build": "webpack --progress",
+    "lint": "eslint src/**/*.js*",
     "test": "mocha --require babel-register --require ignore-styles test/*.spec.js*",
     "coverage": "nyc --extension .jsx npm test",
     "coveralls": "nyc report --reporter=text-lcov | coveralls"
