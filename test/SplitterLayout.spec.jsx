@@ -378,5 +378,15 @@ describe('SplitterLayout', () => {
       TestUtils.Simulate.mouseDown(component.splitter);
       expect(component.state.resizing).toBe(true);
     });
+
+    it('should initialize horizontal secondary size if requested even when splitter is not rendered', () => {
+      const { component } = setupSplitterLayoutInDOM(1, { secondaryInitialSize: 20 });
+      expect(component.state.secondaryPaneSize).toBe(20);
+    });
+
+    it('should initialize vertical secondary size if requested even when splitter is not rendered', () => {
+      const { component } = setupSplitterLayoutInDOM(1, { secondaryInitialSize: 20, vertical: true });
+      expect(component.state.secondaryPaneSize).toBe(20);
+    });
   });
 });
