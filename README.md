@@ -116,6 +116,9 @@ The `SplitterLayout` component supports the following props.
 
 ## Release History
 
+* 0.2.1
+  * Fix an incorrect layout when nesting a horizontal splitter inside a vertical one,
+    and now root element of the splitter is absolutely positioned.
 * 0.1.0
   * First proper release.
 

@@ -1,5 +1,5 @@
 .splitter-layout {
-  position: relative;
+  position: absolute;
   display: flex;
   flex-direction: row;
   width: 100%;
@@ -45,7 +45,7 @@
   cursor: row-resize;
 }
 
-.splitter-layout.splitter-layout-vertical .layout-splitter {
+.splitter-layout.splitter-layout-vertical > .layout-splitter {
   width: 100%;
   height: 4px;
   cursor: row-resize;

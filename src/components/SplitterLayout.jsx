@@ -172,12 +172,12 @@ class SplitterLayout extends React.Component {
     }
 
     return (
-      <div className={containerClasses} ref={c => { this.container = c; }}>
+      <div className={containerClasses} ref={(c) => { this.container = c; }}>
         {wrappedChildren[0]}
         {wrappedChildren.length > 1 &&
           <div
             className="layout-splitter"
-            ref={c => { this.splitter = c; }}
+            ref={(c) => { this.splitter = c; }}
             onMouseDown={this.handleSplitterMouseDown}
           />
         }
@@ -204,7 +204,9 @@ SplitterLayout.defaultProps = {
   percentage: false,
   primaryIndex: 0,
   primaryMinSize: 0,
-  secondaryMinSize: 0
+  secondaryInitialSize: undefined,
+  secondaryMinSize: 0,
+  children: []
 };
 
 export default SplitterLayout;

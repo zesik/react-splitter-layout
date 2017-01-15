@@ -30,4 +30,12 @@ Pane.propTypes = {
   ])
 };
 
+Pane.defaultProps = {
+  vertical: false,
+  primary: false,
+  size: 0,
+  percentage: false,
+  children: []
+};
+
 export default Pane;
