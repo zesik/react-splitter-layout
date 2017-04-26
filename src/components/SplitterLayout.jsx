@@ -169,12 +169,12 @@ class SplitterLayout extends React.Component {
     }
 
     return (
-      <div className={containerClasses} ref={(c) => {this.container = c;}} onMouseMove={this.handleMouseMove}>
+      <div className={containerClasses} ref={(c) => { this.container = c; }} onMouseMove={this.handleMouseMove}>
         {wrappedChildren[0]}
         {wrappedChildren.length > 1 &&
           <div
             className="layout-splitter"
-            ref={(c) => {this.splitter = c;}}
+            ref={(c) => { this.splitter = c; }}
             onMouseDown={this.handleSplitterMouseDown}
             onMouseUp={this.handleMouseUp}
           />
