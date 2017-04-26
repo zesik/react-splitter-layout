@@ -112,6 +112,12 @@ The `SplitterLayout` component supports the following props.
     
     If this prop is not defined, `SplitterLayout` tries to split the layout with equal sizes.
     (Note: equal size may not apply when there are nested layouts.)
+    
+* `onResize: React.PropTypes.func`
+
+    Callback function
+
+    While dragging the splitter handle, this function will be called continuously.
 
 
 ## Release History
