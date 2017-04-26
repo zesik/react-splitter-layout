@@ -355,13 +355,9 @@ describe('SplitterLayout', () => {
   describe('DOM', () => {
     it('should set splitter reference when it is rendered', () => {
       const windowSpy = expect.spyOn(window, 'addEventListener');
-      const documentSpy = expect.spyOn(document, 'addEventListener');
       const { component } = setupSplitterLayoutInDOM(2);
       expect(windowSpy.calls.length).toBeGreaterThan(1);
       expect(windowSpy.calls[windowSpy.length - 1].arguments[0]).toEqual('resize');
-      expect(documentSpy.calls.length).toBeGreaterThan(2);
-      expect(documentSpy.calls[documentSpy.calls.length - 2].arguments[0]).toEqual('mouseup');
-      expect(documentSpy.calls[documentSpy.calls.length - 1].arguments[0]).toEqual('mousemove');
       expect(component.container).toExist();
       expect(component.splitter).toExist();
     });
@@ -388,5 +384,15 @@ describe('SplitterLayout', () => {
       const { component } = setupSplitterLayoutInDOM(1, { secondaryInitialSize: 20, vertical: true });
       expect(component.state.secondaryPaneSize).toBe(20);
     });
+  });
+  
+  describe('Callback', () => {
+    it('should call onResize callback while dragging splitter handle', () => {
+      let called = false;
+      const { component } = setupSplitterLayoutInDOM(2, { onResize: () => { called = true } });
+      TestUtils.Simulate.mouseDown(component.splitter);
+      TestUtils.Simulate.mouseMove(component.splitter);
+      expect(called).toBe(true);
+    })
   });
 });
