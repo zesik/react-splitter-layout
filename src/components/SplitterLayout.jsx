@@ -120,13 +120,10 @@ class SplitterLayout extends React.Component {
       const splitterRect = this.splitter.getBoundingClientRect();
       const left = e.clientX;
       const top = e.clientY;
-      const secondaryPaneSize = this.getSecondaryPaneSize(containerRect, splitterRect, {
-        left: left,
-        top: top
-      }, true);
-    clearSelection();
+      const secondaryPaneSize = this.getSecondaryPaneSize(containerRect, splitterRect, { left, top }, true);
+      clearSelection();
       this.props.onResize({
-        secondaryPaneSize: secondaryPaneSize,
+        secondaryPaneSize,
         mousePositionLeft: left,
         mousePositionTop: top
       });
