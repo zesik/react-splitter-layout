@@ -32,8 +32,6 @@ class SplitterLayout extends React.Component {
   componentDidMount() {
     window.addEventListener('resize', this.handleResize);
     document.addEventListener('mouseup', this.handleMouseUp);
-    document.addEventListener('mousemove', this.handleMouseMove);
-
     let secondaryPaneSize;
     if (typeof this.props.secondaryInitialSize !== 'undefined') {
       secondaryPaneSize = this.props.secondaryInitialSize;
@@ -56,8 +54,7 @@ class SplitterLayout extends React.Component {
 
   componentWillUnmount() {
     window.removeEventListener('resize', this.handleResize);
-    document.removeEventListener('mouseup', this.handleMouseUp);
-    document.removeEventListener('mousemove', this.handleMouseMove);
+    document.addEventListener('mouseup', this.handleMouseUp);
   }
 
   getSecondaryPaneSize(containerRect, splitterRect, clientPosition, offsetMouse) {
@@ -121,11 +118,15 @@ class SplitterLayout extends React.Component {
     if (this.state.resizing) {
       const containerRect = this.container.getBoundingClientRect();
       const splitterRect = this.splitter.getBoundingClientRect();
-      const secondaryPaneSize = this.getSecondaryPaneSize(containerRect, splitterRect, {
-        left: e.clientX,
-        top: e.clientY
-      }, true);
+      const left = e.clientX;
+      const top = e.clientY;
+      const secondaryPaneSize = this.getSecondaryPaneSize(containerRect, splitterRect, { left, top }, true);
       clearSelection();
+      this.props.onResize({
+        secondaryPaneSize,
+        mousePositionLeft: left,
+        mousePositionTop: top
+      });
       this.setState({ secondaryPaneSize });
     }
   }
@@ -172,7 +173,7 @@ class SplitterLayout extends React.Component {
     }
 
     return (
-      <div className={containerClasses} ref={(c) => { this.container = c; }}>
+      <div className={containerClasses} ref={(c) => { this.container = c; }} onMouseMove={this.handleMouseMove}>
         {wrappedChildren[0]}
         {wrappedChildren.length > 1 &&
           <div
@@ -195,6 +196,7 @@ SplitterLayout.propTypes = {
   primaryMinSize: React.PropTypes.number,
   secondaryInitialSize: React.PropTypes.number,
   secondaryMinSize: React.PropTypes.number,
+  onResize: React.PropTypes.func,
   children: React.PropTypes.arrayOf(React.PropTypes.node)
 };
 
@@ -206,6 +208,7 @@ SplitterLayout.defaultProps = {
   primaryMinSize: 0,
   secondaryInitialSize: undefined,
   secondaryMinSize: 0,
+  onResize: () => {},
   children: []
 };
 
