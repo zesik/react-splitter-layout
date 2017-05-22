@@ -118,10 +118,7 @@ The `SplitterLayout` component supports the following props.
     Callback function
 
     While dragging the splitter handle, this function will be called continuously.
-    The event data object contains:
-    `secondaryPaneSize`
-    `mousePositionLeft`
-    `mousePositionTop`
+    The event data object contains: `secondaryPaneSize`, `mousePositionLeft` and `mousePositionTop`.
 
 
 ## Release History
