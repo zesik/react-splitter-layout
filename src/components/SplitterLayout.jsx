@@ -124,7 +124,7 @@ class SplitterLayout extends React.Component {
         left: left,
         top: top
       }, true);
-    clearSelection();
+      clearSelection();
       this.props.onResize({
         secondaryPaneSize: secondaryPaneSize,
         mousePositionLeft: left,
