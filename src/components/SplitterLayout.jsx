@@ -31,7 +31,7 @@ class SplitterLayout extends React.Component {
 
   componentDidMount() {
     window.addEventListener('resize', this.handleResize);
-
+    document.addEventListener('mouseup', this.handleMouseUp);
     let secondaryPaneSize;
     if (typeof this.props.secondaryInitialSize !== 'undefined') {
       secondaryPaneSize = this.props.secondaryInitialSize;
@@ -54,6 +54,7 @@ class SplitterLayout extends React.Component {
 
   componentWillUnmount() {
     window.removeEventListener('resize', this.handleResize);
+    document.addEventListener('mouseup', this.handleMouseUp);
   }
 
   getSecondaryPaneSize(containerRect, splitterRect, clientPosition, offsetMouse) {
@@ -117,12 +118,18 @@ class SplitterLayout extends React.Component {
     if (this.state.resizing) {
       const containerRect = this.container.getBoundingClientRect();
       const splitterRect = this.splitter.getBoundingClientRect();
+      const left = e.clientX;
+      const top = e.clientY;
       const secondaryPaneSize = this.getSecondaryPaneSize(containerRect, splitterRect, {
-        left: e.clientX,
-        top: e.clientY
+        left: left,
+        top: top
       }, true);
-      clearSelection();
-      this.props.onResize();
+    clearSelection();
+      this.props.onResize({
+        secondaryPaneSize: secondaryPaneSize,
+        mousePositionLeft: left,
+        mousePositionTop: top
+      });
       this.setState({ secondaryPaneSize });
     }
   }
@@ -176,7 +183,6 @@ class SplitterLayout extends React.Component {
             className="layout-splitter"
             ref={(c) => { this.splitter = c; }}
             onMouseDown={this.handleSplitterMouseDown}
-            onMouseUp={this.handleMouseUp}
           />
         }
         {wrappedChildren.length > 1 && wrappedChildren[1]}

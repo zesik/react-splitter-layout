@@ -385,14 +385,17 @@ describe('SplitterLayout', () => {
       expect(component.state.secondaryPaneSize).toBe(20);
     });
   });
-  
+
   describe('Callback', () => {
     it('should call onResize callback while dragging splitter handle', () => {
-      let called = false;
-      const { component } = setupSplitterLayoutInDOM(2, { onResize: () => { called = true } });
+      let eventData = undefined;
+      const { component } = setupSplitterLayoutInDOM(2, { onResize: (event) => { eventData = event }});
       TestUtils.Simulate.mouseDown(component.splitter);
-      TestUtils.Simulate.mouseMove(component.splitter);
-      expect(called).toBe(true);
+      TestUtils.Simulate.mouseMove(component.splitter, { clientX: 10, clientY: 10 });
+      expect(eventData).toIncludeKeys([ 'secondaryPaneSize', 'mousePositionLeft', 'mousePositionTop' ]);
+      expect(typeof(eventData.secondaryPaneSize)).toEqual('number')
+      expect(eventData.mousePositionLeft).toEqual(10);
+      expect(eventData.mousePositionTop).toEqual(10);
     })
   });
 });
