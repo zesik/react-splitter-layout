@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 function Pane(props) {
   const size = props.size || 0;
@@ -20,13 +21,13 @@ function Pane(props) {
 }
 
 Pane.propTypes = {
-  vertical: React.PropTypes.bool,
-  primary: React.PropTypes.bool,
-  size: React.PropTypes.number,
-  percentage: React.PropTypes.bool,
-  children: React.PropTypes.oneOfType([
-    React.PropTypes.arrayOf(React.PropTypes.node),
-    React.PropTypes.node
+  vertical: PropTypes.bool,
+  primary: PropTypes.bool,
+  size: PropTypes.number,
+  percentage: PropTypes.bool,
+  children: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.node),
+    PropTypes.node
   ])
 };
 
