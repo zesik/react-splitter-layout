@@ -1,9 +1,11 @@
 # react-splitter-layout
 
-[![Build Status](https://travis-ci.org/zesik/react-splitter-layout.svg?branch=master)](https://travis-ci.org/zesik/react-splitter-layout)
-[![Coverage Status](https://coveralls.io/repos/github/zesik/react-splitter-layout/badge.svg?branch=master)](https://coveralls.io/github/zesik/react-splitter-layout?branch=master)
-[![npm version](https://badge.fury.io/js/react-splitter-layout.svg)](https://badge.fury.io/js/react-splitter-layout)
-[![devDependency Status](https://david-dm.org/zesik/react-splitter-layout/dev-status.svg)](https://david-dm.org/zesik/react-splitter-layout#info=devDependencies)
+[![Travis](https://img.shields.io/travis/zesik/react-splitter-layout.svg)](https://travis-ci.org/zesik/react-splitter-layout.svg?branch=master)
+[![Coveralls](https://img.shields.io/coveralls/zesik/react-splitter-layout.svg)](https://coveralls.io/repos/github/zesik/react-splitter-layout/badge.svg?branch=master)
+[![npm](https://img.shields.io/npm/v/react-splitter-layout.svg)](https://www.npmjs.com/package/react-splitter-layout)
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/zesik/react-splitter-layout/master/LICENSE)
+[![David devDependencies](https://img.shields.io/david/dev/zesik/react-splitter-layout.svg)](https://david-dm.org/zesik/react-splitter-layout?type=dev)
+[![David peerDependencies](https://img.shields.io/david/peer/zesik/react-splitter-layout.svg)](https://david-dm.org/zesik/react-splitter-layout?type=peer)
 
 A simple split layout for React and modern browsers.
 
@@ -11,7 +13,7 @@ A simple split layout for React and modern browsers.
 
 ## Dependencies
 
-React-splitter-layout depends on React. See [package.json](package.json) for more details.
+React-splitter-layout depends on React and prop-types. See [package.json](package.json) for more details.
 
 ## Installation
 
@@ -46,7 +48,7 @@ $ npm run coverage
     ```javascript
     import React from 'react';
     import SplitterLayout from 'react-splitter-layout';
-    
+
     class YourComponent extends React.Component {
       render() {
         return (
@@ -57,7 +59,7 @@ $ npm run coverage
         );
       }
     }
- 
+
     export default YourComponent;
     ```
 
@@ -78,22 +80,22 @@ The `SplitterLayout` component supports the following props.
 * `vertical: React.PropTypes.bool`
 
     Determine whether the layout should be a horizontal split or a vertical split. The default value is `false`.
-    
+
 * `percentage: React.PropTypes.bool`
 
     Determine whether the width of each pane should be calculated in percentage or by pixels.
     The default value is `false`, which means width is calculated in pixels.
-    
+
 * `primaryIndex: React.PropTypes.number`
 
     Index of the *primary pane*. Since `SplitterLayout` supports at most 2 children, only `0` or `1` is allowed.
     The default value is `0`.
-    
+
     A *primary pane* is used to show users primary content, while a *secondary pane* is the other pane.
     When window size changes and `percentage` is set to `false`,
     primary pane's size is flexible and secondary pane's size is kept unchanged.
     However, when the window size is not enough for showing both minimal primary pane and minimal secondary pane,
-    the primary pane's size is served first. 
+    the primary pane's size is served first.
 
 * `primaryMinSize: React.PropTypes.number`
 
@@ -101,7 +103,7 @@ The `SplitterLayout` component supports the following props.
 
     When `percentage` is set to `false`, this value is pixel size (25 means 25px).
     When `percentage` is set to `true`, this value is percentage (25 means 25%).
-    
+
 * `secondaryMinSize: React.PropTypes.number`
 
     Minimal size of secondary pane.
@@ -109,13 +111,16 @@ The `SplitterLayout` component supports the following props.
 * `secondaryInitialSize: React.PropTypes.number`
 
     Initial size of secondary pane when page loads.
-    
+
     If this prop is not defined, `SplitterLayout` tries to split the layout with equal sizes.
     (Note: equal size may not apply when there are nested layouts.)
 
 
 ## Release History
 
+* 3.0.0
+  * Update to React 16.
+  * 100% code coverage test!
 * 0.2.1
   * Fix an incorrect layout when nesting a horizontal splitter inside a vertical one,
     and now root element of the splitter is absolutely positioned.
