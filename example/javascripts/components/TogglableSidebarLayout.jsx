@@ -43,7 +43,7 @@ export default class TogglableSidebarLayout extends React.Component {
               &nbsp;&nbsp;<strong>&lt;div&gt;2nd&lt;/div&gt;</strong>{'\n'}
               &lt;/SplitterLayout&gt;
             </pre>
-            <Lorem title="2nd Pane"/>
+            <Lorem title="2nd Pane" />
           </div>
         }
       </SplitterLayout>

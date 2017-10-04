@@ -177,6 +177,7 @@ class SplitterLayout extends React.Component {
         {wrappedChildren[0]}
         {wrappedChildren.length > 1 &&
           <div
+            role="separator"
             className="layout-splitter"
             ref={(c) => { this.splitter = c; }}
             onMouseDown={this.handleSplitterMouseDown}

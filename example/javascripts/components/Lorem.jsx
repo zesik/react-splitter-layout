@@ -117,4 +117,8 @@ Lorem.propTypes = {
   title: PropTypes.string
 };
 
+Lorem.defaultProps = {
+  title: ''
+};
+
 export default Lorem;

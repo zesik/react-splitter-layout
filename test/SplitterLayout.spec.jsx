@@ -1,3 +1,4 @@
+/* eslint prefer-spread: [0], react/no-array-index-key: [0], react/no-find-dom-node: [0] */
 import React from 'react';
 import ReactDOM from 'react-dom';
 import ReactTestUtils from 'react-dom/test-utils';

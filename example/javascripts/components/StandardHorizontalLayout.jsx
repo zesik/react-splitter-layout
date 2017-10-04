@@ -8,7 +8,7 @@ export default function() {
       <div className="my-pane">
         <h2>1st Pane</h2>
         <p>This is the 1st pane, and this is the primary pane by default.</p>
-        <p>Try to resize the window and see how secondary pane's size keeps.</p>
+        <p>Try to resize the window and see how secondary pane&apos;s size keeps.</p>
         <pre>
           &lt;SplitterLayout primaryIndex={'{0}'}&gt;{'\n'}
           &nbsp;&nbsp;<strong>&lt;div&gt;1st&lt;/div&gt;</strong>{'\n'}
@@ -20,7 +20,7 @@ export default function() {
       <div className="my-pane">
         <h2>2nd Pane</h2>
         <p>This is the 2nd pane, and this is the secondary pane by default.</p>
-        <p>Try to resize the window and see how secondary pane's size keeps.</p>
+        <p>Try to resize the window and see how secondary pane&apos;s size keeps.</p>
         <pre>
           &lt;SplitterLayout primaryIndex={'{0}'}&gt;{'\n'}
           &nbsp;&nbsp;&lt;div&gt;1st&lt;/div&gt;{'\n'}
