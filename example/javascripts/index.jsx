@@ -1,6 +1,6 @@
 import React from 'react';
 import { render } from 'react-dom';
-import { Router, Route, hashHistory } from 'react-router';
+import { HashRouter, Route, Switch } from 'react-router-dom';
 import App from './components/App';
 import StandardHorizontalLayout from './components/StandardHorizontalLayout';
 import StandardVerticalLayout from './components/StandardVerticalLayout';
@@ -20,16 +20,19 @@ function NoMatch() {
 }
 
 render(
-  <Router history={hashHistory}>
-    <Route path="/" component={App}>
-      <Route path="/standard-horizontal" component={StandardHorizontalLayout} />
-      <Route path="/standard-vertical" component={StandardVerticalLayout} />
-      <Route path="/minimal-size" component={LayoutWithMinimalSize} />
-      <Route path="/percentage" component={PercentageLayout} />
-      <Route path="/nested" component={NestedLayout} />
-      <Route path="/sidebar" component={TogglableSidebarLayout} />
-      <Route path="*" component={NoMatch} />
-    </Route>
-  </Router>,
+  <HashRouter>
+    <App>
+      <Switch>
+        <Route exact path="/" />
+        <Route path="/standard-horizontal" component={StandardHorizontalLayout} />
+        <Route path="/standard-vertical" component={StandardVerticalLayout} />
+        <Route path="/minimal-size" component={LayoutWithMinimalSize} />
+        <Route path="/percentage" component={PercentageLayout} />
+        <Route path="/nested" component={NestedLayout} />
+        <Route path="/sidebar" component={TogglableSidebarLayout} />
+        <Route path="*" component={NoMatch} />
+      </Switch>
+    </App>
+  </HashRouter>,
   document.getElementById('root')
 );
