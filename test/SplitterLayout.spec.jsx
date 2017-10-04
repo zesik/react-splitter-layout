@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import ReactTestUtils from 'react-dom/test-utils';
 import ShallowRenderer from 'react-test-renderer/shallow';
 import SplitterLayout from '../src/components/SplitterLayout';
@@ -342,13 +343,31 @@ describe('SplitterLayout', () => {
   });
 
   describe('DOM', () => {
-    it('should set splitter reference when it is rendered', () => {
+    it('should add DOM event listeners when mounted', () => {
       const windowSpy = jest.spyOn(window, 'addEventListener');
       const documentSpy = jest.spyOn(document, 'addEventListener');
       const component = renderIntoDocument(2);
       expect(windowSpy).toBeCalledWith('resize', component.handleResize);
       expect(documentSpy).toBeCalledWith('mouseup', component.handleMouseUp);
       expect(documentSpy).toBeCalledWith('mousemove', component.handleMouseMove);
+      windowSpy.mockRestore();
+      documentSpy.mockRestore();
+    });
+
+    it('should remove DOM event listeners when unmounted', () => {
+      const component = renderIntoDocument(2);
+      const windowSpy = jest.spyOn(window, 'removeEventListener');
+      const documentSpy = jest.spyOn(document, 'removeEventListener');
+      ReactDOM.unmountComponentAtNode(ReactDOM.findDOMNode(component).parentNode);
+      expect(windowSpy).toBeCalledWith('resize', component.handleResize);
+      expect(documentSpy).toBeCalledWith('mouseup', component.handleMouseUp);
+      expect(documentSpy).toBeCalledWith('mousemove', component.handleMouseMove);
+      windowSpy.mockRestore();
+      documentSpy.mockRestore();
+    });
+
+    it('should set splitter reference when it is rendered', () => {
+      const component = renderIntoDocument(2);
       expect(component.container).toBeTruthy();
       expect(component.splitter).toBeTruthy();
     });
@@ -359,20 +378,71 @@ describe('SplitterLayout', () => {
       expect(component.splitter).toBeFalsy();
     });
 
-    it('should set state when trying to drag splitter', () => {
+    it('should set resizing state when dragging splitter', () => {
       const component = renderIntoDocument(2);
       expect(component.state.resizing).toBe(false);
       ReactTestUtils.Simulate.mouseDown(component.splitter);
       expect(component.state.resizing).toBe(true);
+      document.simulateMouseUp();
+      expect(component.state.resizing).toBe(false);
+    });
+
+    it('should set pane size when dragging splitter', () => {
+      const component = renderIntoDocument(2);
+      const fn = component.container.getBoundingClientRect;
+      component.container.getBoundingClientRect = () => ({ left: 0, top: 0, width: 200, height: 300 });
+      ReactTestUtils.Simulate.mouseDown(component.splitter);
+      document.simulateMouseMove(25, 30);
+      expect(component.state.secondaryPaneSize).toBe(175);
+      component.container.getBoundingClientRect = fn;
+    });
+
+    it('should keep secondary pane size when resizing', () => {
+      const component = renderIntoDocument(2);
+      const containerRectFn = component.container.getBoundingClientRect;
+      const splitterRectFn = component.splitter.getBoundingClientRect;
+      component.container.getBoundingClientRect = () => ({ left: 0, top: 0, width: 200, height: 300 });
+      component.splitter.getBoundingClientRect = () => ({ left: 100, top: 0, width: 4, height: 300 });
+      window.resizeTo(200, 300);
+      expect(component.state.secondaryPaneSize).toBe(96);
+      component.container.getBoundingClientRect = containerRectFn;
+      component.splitter.getBoundingClientRect = splitterRectFn;
+    });
+
+    it('should choose proper method to clear selection when dragging requested', () => {
+      const component = renderIntoDocument(2);
+      const fn = jest.fn();
+
+      document.selection = { empty: fn };
+      ReactTestUtils.Simulate.mouseDown(component.splitter);
+      expect(fn).toHaveBeenCalledTimes(1);
+      fn.mockClear();
+      document.selection = null;
+
+      window.getSelection = () => ({ empty: fn });
+      ReactTestUtils.Simulate.mouseDown(component.splitter);
+      expect(fn).toHaveBeenCalledTimes(1);
+      fn.mockClear();
+
+      window.getSelection = () => ({ removeAllRanges: fn });
+      ReactTestUtils.Simulate.mouseDown(component.splitter);
+      expect(fn).toHaveBeenCalledTimes(1);
+      fn.mockClear();
+
+      window.getSelection = () => ({});
+      ReactTestUtils.Simulate.mouseDown(component.splitter);
+      expect(fn).not.toHaveBeenCalled();
+      fn.mockClear();
+      window.getSelection = null;
     });
 
     it('should initialize horizontal secondary size if requested even when splitter is not rendered', () => {
-      const component = renderIntoDocument(1, { secondaryInitialSize: 20 });
+      const component = renderIntoDocument(2, { secondaryInitialSize: 20 });
       expect(component.state.secondaryPaneSize).toBe(20);
     });
 
     it('should initialize vertical secondary size if requested even when splitter is not rendered', () => {
-      const component = renderIntoDocument(1, { secondaryInitialSize: 20, vertical: true });
+      const component = renderIntoDocument(2, { secondaryInitialSize: 20, vertical: true });
       expect(component.state.secondaryPaneSize).toBe(20);
     });
   });
