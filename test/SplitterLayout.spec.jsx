@@ -1,37 +1,26 @@
-import jsdomify from 'jsdomify';
-jsdomify.create();
-import expect from 'expect';
 import React from 'react';
-import TestUtils from 'react-addons-test-utils';
+import ReactTestUtils from 'react-dom/test-utils';
+import ShallowRenderer from 'react-test-renderer/shallow';
 import SplitterLayout from '../src/components/SplitterLayout';
 import Pane from '../src/components/Pane';
 
-function setupSplitterLayout(itemCount, props) {
-  props = props || {};
-  const children = [];
-  for (let i = 0; i < itemCount; ++i) {
-    children.push(<div key={i}>Child #{i}</div>);
-  }
-  const renderer = TestUtils.createRenderer();
+function render(length, props = {}) {
+  const children = Array.apply(null, { length }).map((_, i) => <div key={i}>Child #{i}</div>);
+  const renderer = new ShallowRenderer();
   renderer.render(<SplitterLayout {...props}>{children}</SplitterLayout>);
-  const output = renderer.getRenderOutput();
-  return { props, output, renderer };
+  return renderer.getRenderOutput();
 }
 
-function setupSplitterLayoutInDOM(itemCount, props) {
-  props = props || {};
-  const children = [];
-  for (let i = 0; i < itemCount; ++i) {
-    children.push(<div key={i}>Child #{i}</div>);
-  }
-  const component = TestUtils.renderIntoDocument(<SplitterLayout {...props}>{children}</SplitterLayout>);
-  return { props, component };
+function renderIntoDocument(length, props) {
+  const children = Array.apply(null, { length }).map((_, i) => <div key={i}>Child #{i}</div>);
+  const component = ReactTestUtils.renderIntoDocument(<SplitterLayout {...props}>{children}</SplitterLayout>);
+  return component;
 }
 
 describe('SplitterLayout', () => {
   describe('rendering', () => {
     it('should render correctly when 2 children provided', () => {
-      const { output } = setupSplitterLayout(2);
+      const output = render(2);
       expect(output.type).toBe('div');
       expect(output.props.className).toBe('splitter-layout');
       expect(output.props.children.length).toBe(3);
@@ -48,7 +37,7 @@ describe('SplitterLayout', () => {
     });
 
     it('should render properties correctly if requested', () => {
-      const { output } = setupSplitterLayout(2, {
+      const output = render(2, {
         customClassName: 'custom-class',
         vertical: true,
         percentage: true,
@@ -70,7 +59,7 @@ describe('SplitterLayout', () => {
     });
 
     it('should set the first children as primary if invalid primary index is provided', () => {
-      const { output } = setupSplitterLayout(2, {
+      const output = render(2, {
         primaryIndex: 5
       });
       expect(output.type).toBe('div');
@@ -89,7 +78,7 @@ describe('SplitterLayout', () => {
     });
 
     it('should render one child when nothing provided', () => {
-      const { output } = setupSplitterLayout(0);
+      const output = render(0);
       expect(output.type).toBe('div');
       expect(output.props.className).toBe('splitter-layout');
       expect(output.props.children.length).toBe(3);
@@ -102,7 +91,7 @@ describe('SplitterLayout', () => {
     });
 
     it('should render one child when only 1 child provided', () => {
-      const { output } = setupSplitterLayout(1);
+      const output = render(1);
       expect(output.type).toBe('div');
       expect(output.props.className).toBe('splitter-layout');
       expect(output.props.children.length).toBe(3);
@@ -115,7 +104,7 @@ describe('SplitterLayout', () => {
     });
 
     it('should render 2 children when more than 2 children provided', () => {
-      const { output } = setupSplitterLayout(5);
+      const output = render(5);
       expect(output.type).toBe('div');
       expect(output.props.className).toBe('splitter-layout');
       expect(output.props.children.length).toBe(3);
@@ -354,38 +343,36 @@ describe('SplitterLayout', () => {
 
   describe('DOM', () => {
     it('should set splitter reference when it is rendered', () => {
-      const windowSpy = expect.spyOn(window, 'addEventListener');
-      const documentSpy = expect.spyOn(document, 'addEventListener');
-      const { component } = setupSplitterLayoutInDOM(2);
-      expect(windowSpy.calls.length).toBeGreaterThan(1);
-      expect(windowSpy.calls[windowSpy.length - 1].arguments[0]).toEqual('resize');
-      expect(documentSpy.calls.length).toBeGreaterThan(2);
-      expect(documentSpy.calls[documentSpy.calls.length - 2].arguments[0]).toEqual('mouseup');
-      expect(documentSpy.calls[documentSpy.calls.length - 1].arguments[0]).toEqual('mousemove');
-      expect(component.container).toExist();
-      expect(component.splitter).toExist();
+      const windowSpy = jest.spyOn(window, 'addEventListener');
+      const documentSpy = jest.spyOn(document, 'addEventListener');
+      const component = renderIntoDocument(2);
+      expect(windowSpy).toBeCalledWith('resize', component.handleResize);
+      expect(documentSpy).toBeCalledWith('mouseup', component.handleMouseUp);
+      expect(documentSpy).toBeCalledWith('mousemove', component.handleMouseMove);
+      expect(component.container).toBeTruthy();
+      expect(component.splitter).toBeTruthy();
     });
 
     it('should not set splitter reference when it is not rendered', () => {
-      const { component } = setupSplitterLayoutInDOM(1);
-      expect(component.container).toExist();
-      expect(component.splitter).toNotExist();
+      const component = renderIntoDocument(1);
+      expect(component.container).toBeTruthy();
+      expect(component.splitter).toBeFalsy();
     });
 
     it('should set state when trying to drag splitter', () => {
-      const { component } = setupSplitterLayoutInDOM(2);
+      const component = renderIntoDocument(2);
       expect(component.state.resizing).toBe(false);
-      TestUtils.Simulate.mouseDown(component.splitter);
+      ReactTestUtils.Simulate.mouseDown(component.splitter);
       expect(component.state.resizing).toBe(true);
     });
 
     it('should initialize horizontal secondary size if requested even when splitter is not rendered', () => {
-      const { component } = setupSplitterLayoutInDOM(1, { secondaryInitialSize: 20 });
+      const component = renderIntoDocument(1, { secondaryInitialSize: 20 });
       expect(component.state.secondaryPaneSize).toBe(20);
     });
 
     it('should initialize vertical secondary size if requested even when splitter is not rendered', () => {
-      const { component } = setupSplitterLayoutInDOM(1, { secondaryInitialSize: 20, vertical: true });
+      const component = renderIntoDocument(1, { secondaryInitialSize: 20, vertical: true });
       expect(component.state.secondaryPaneSize).toBe(20);
     });
   });
