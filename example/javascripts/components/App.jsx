@@ -18,6 +18,7 @@ function App(props) {
             <li><NavLink to="/percentage">Width in Percentage</NavLink></li>
             <li><NavLink to="/nested">Nested Layout</NavLink></li>
             <li><NavLink to="/sidebar">Sidebar</NavLink></li>
+            <li><NavLink to="/events">Events</NavLink></li>
           </ul>
         </nav>
         <div className="child-content">

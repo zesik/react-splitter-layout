@@ -9,6 +9,7 @@ import LayoutWithMinimalSize from './components/LayoutWithMinimalSize';
 import PercentageLayout from './components/PercentageLayout';
 import NestedLayout from './components/NestedLayout';
 import TogglableSidebarLayout from './components/TogglableSidebarLayout';
+import HorizontalLayoutWithEvents from './components/HorizontalLayoutWithEvents';
 import '../stylesheets/index.css';
 
 function NoMatch() {
@@ -31,6 +32,7 @@ render(
         <Route path="/percentage" component={PercentageLayout} />
         <Route path="/nested" component={NestedLayout} />
         <Route path="/sidebar" component={TogglableSidebarLayout} />
+        <Route path="/events" component={HorizontalLayoutWithEvents} />
         <Route path="*" component={NoMatch} />
       </Switch>
     </App>

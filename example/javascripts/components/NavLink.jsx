@@ -1,9 +1,9 @@
 /* eslint import/no-extraneous-dependencies: [0] */
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
 export default function(props) {
   return (
-    <Link {...props} activeClassName="active" />
+    <NavLink {...props} activeClassName="active" />
   );
 }
