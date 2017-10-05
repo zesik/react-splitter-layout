@@ -1,7 +1,7 @@
 # react-splitter-layout
 
-[![Travis](https://img.shields.io/travis/zesik/react-splitter-layout.svg)](https://travis-ci.org/zesik/react-splitter-layout.svg?branch=master)
-[![Coveralls](https://img.shields.io/coveralls/zesik/react-splitter-layout.svg)](https://coveralls.io/repos/github/zesik/react-splitter-layout/badge.svg?branch=master)
+[![Travis](https://img.shields.io/travis/zesik/react-splitter-layout.svg)](https://travis-ci.org/zesik/react-splitter-layout)
+[![Coveralls](https://img.shields.io/coveralls/zesik/react-splitter-layout.svg)](https://coveralls.io/github/zesik/react-splitter-layout)
 [![npm](https://img.shields.io/npm/v/react-splitter-layout.svg)](https://www.npmjs.com/package/react-splitter-layout)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/zesik/react-splitter-layout/master/LICENSE)
 [![David devDependencies](https://img.shields.io/david/dev/zesik/react-splitter-layout.svg)](https://david-dm.org/zesik/react-splitter-layout?type=dev)
