@@ -72,21 +72,21 @@ and the only direct children occupies all available space.
 
 The `SplitterLayout` component supports the following props.
 
-* `customClassName: React.PropTypes.string`
+* `customClassName: PropTypes.string`
 
     Custom CSS class name applied to the layout `div`. You can use this to customize layout style.
     Refers to the [original stylesheet](src/stylesheets/index.css) to see what you can customize.
 
-* `vertical: React.PropTypes.bool`
+* `vertical: PropTypes.bool`
 
     Determine whether the layout should be a horizontal split or a vertical split. The default value is `false`.
 
-* `percentage: React.PropTypes.bool`
+* `percentage: PropTypes.bool`
 
     Determine whether the width of each pane should be calculated in percentage or by pixels.
     The default value is `false`, which means width is calculated in pixels.
 
-* `primaryIndex: React.PropTypes.number`
+* `primaryIndex: PropTypes.number`
 
     Index of the *primary pane*. Since `SplitterLayout` supports at most 2 children, only `0` or `1` is allowed.
     The default value is `0`.
@@ -97,29 +97,49 @@ The `SplitterLayout` component supports the following props.
     However, when the window size is not enough for showing both minimal primary pane and minimal secondary pane,
     the primary pane's size is served first.
 
-* `primaryMinSize: React.PropTypes.number`
+* `primaryMinSize: PropTypes.number`
 
     Minimal size of primary pane. The default value is 0.
 
     When `percentage` is set to `false`, this value is pixel size (25 means 25px).
     When `percentage` is set to `true`, this value is percentage (25 means 25%).
 
-* `secondaryMinSize: React.PropTypes.number`
+* `secondaryMinSize: PropTypes.number`
 
     Minimal size of secondary pane.
 
-* `secondaryInitialSize: React.PropTypes.number`
+* `secondaryInitialSize: PropTypes.number`
 
     Initial size of secondary pane when page loads.
 
     If this prop is not defined, `SplitterLayout` tries to split the layout with equal sizes.
     (Note: equal size may not apply when there are nested layouts.)
 
+* `onDragStart: PropTypes.func`
+
+    Called when dragging is started.
+
+    No parameter will be passed to event handlers.
+
+* `onDragEnd: PropTypes.func`
+
+    Called when dragging is started.
+
+    No parameter will be passed to event handlers.
+
+* `onSecondaryPaneSizeChange: PropTypes.func`
+
+    Called when the size of secondary pane is changed.
+
+    Event handlers will be passed with a single parameter of `number` type representing new size of secondary pane.
+    When `percentage` is set to `false`, the value is in pixel size.
+    When `percentage` is set to `true`, the value is in percentage.
 
 ## Release History
 
 * 3.0.0
-  * Update to React 16.
+  * Add dragging and size change events.
+  * Drop support of React earlier than 15.5.0.
   * 100% code coverage test!
 * 0.2.1
   * Fix an incorrect layout when nesting a horizontal splitter inside a vertical one,
