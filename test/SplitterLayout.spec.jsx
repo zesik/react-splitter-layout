@@ -437,6 +437,34 @@ describe('SplitterLayout', () => {
       window.getSelection = null;
     });
 
+    it('should trigger drag events when dragging starts and finishes', () => {
+      const startFn = jest.fn();
+      const endFn = jest.fn();
+      const component = renderIntoDocument(2, { onDragStart: startFn, onDragEnd: endFn });
+      expect(startFn).not.toHaveBeenCalled();
+      expect(endFn).not.toHaveBeenCalled();
+      ReactTestUtils.Simulate.mouseDown(component.splitter);
+      expect(startFn).toHaveBeenCalledTimes(1);
+      expect(endFn).not.toHaveBeenCalled();
+      document.simulateMouseUp();
+      expect(startFn).toHaveBeenCalledTimes(1);
+      expect(endFn).toHaveBeenCalledTimes(1);
+    });
+
+    it('should trigger size change events when secondary pane size has been changed', () => {
+      const fn = jest.fn();
+      const component = renderIntoDocument(2, { secondaryInitialSize: 20, onSecondaryPaneSizeChange: fn });
+      expect(fn).toHaveBeenCalledTimes(1);
+      expect(fn).toHaveBeenCalledWith(20);
+      const rectFn = component.container.getBoundingClientRect;
+      component.container.getBoundingClientRect = () => ({ left: 0, top: 0, width: 200, height: 300 });
+      ReactTestUtils.Simulate.mouseDown(component.splitter);
+      document.simulateMouseMove(25, 30);
+      expect(fn).toHaveBeenCalledTimes(2);
+      expect(fn).toHaveBeenCalledWith(175);
+      component.container.getBoundingClientRect = rectFn;
+    });
+
     it('should initialize horizontal secondary size if requested even when splitter is not rendered', () => {
       const component = renderIntoDocument(2, { secondaryInitialSize: 20 });
       expect(component.state.secondaryPaneSize).toBe(20);
