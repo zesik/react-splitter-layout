@@ -19,14 +19,15 @@
 
 .splitter-layout > .layout-splitter {
   flex: 0 0 auto;
-  width: 4px;
+  width: 6px;
   height: 100%;
   cursor: col-resize;
-  background-color: #ccc;
+  background-color: #DDD;
+  
 }
 
 .splitter-layout .layout-splitter:hover {
-  background-color: #bbb;
+  background-color: #C4E1A4;
 }
 
 .splitter-layout.layout-changing {
@@ -34,7 +35,7 @@
 }
 
 .splitter-layout.layout-changing > .layout-splitter {
-  background-color: #aaa;
+  background-color: #C4E1A4;
 }
 
 .splitter-layout.splitter-layout-vertical {
@@ -47,6 +48,40 @@
 
 .splitter-layout.splitter-layout-vertical > .layout-splitter {
   width: 100%;
-  height: 4px;
+  height: 6px;
   cursor: row-resize;
 }
+
+/*splitterButton*/
+.layout-splitter > .splitterButton{
+  width: 6px;
+  height: 60px;
+  background-color: #BBB;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+}
+.layout-splitter > .splitterButton:hover{
+  background-color: #FC6;
+}
+.layout-splitter > .layout-pane.hide{
+  width: 0%;
+}
+.splitter-layout.splitter-layout-vertical > .layout-splitter > .layout-pane.hide{
+  height: 0%;
+}
+.splitter-layout.splitter-layout-vertical > .layout-splitter > .splitterButton{
+  width: 60px;
+  height: 6px;
+  margin: 0 auto;
+  background-color: #BBB;
+  position: initial; 
+  top: initial; 
+  transform: initial; 
+  cursor: pointer;
+}
+.splitter-layout.splitter-layout-vertical > .layout-splitter > .splitterButton:hover{
+  background-color: #FC6;
+}
+
