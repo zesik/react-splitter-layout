@@ -123,7 +123,7 @@ The `SplitterLayout` component supports the following props.
 
 * `onDragEnd: PropTypes.func`
 
-    Called when dragging is started.
+    Called when dragging finishes.
 
     No parameter will be passed to event handlers.
 
