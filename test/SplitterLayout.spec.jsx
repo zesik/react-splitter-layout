@@ -344,6 +344,12 @@ describe('SplitterLayout', () => {
   });
 
   describe('DOM', () => {
+    afterEach(() => {
+      document.body.createTextRange = undefined;
+      window.getSelection = undefined;
+      document.selection = undefined;
+    });
+
     it('should add DOM event listeners when mounted', () => {
       const windowSpy = jest.spyOn(window, 'addEventListener');
       const documentSpy = jest.spyOn(document, 'addEventListener');
@@ -410,31 +416,73 @@ describe('SplitterLayout', () => {
       component.splitter.getBoundingClientRect = splitterRectFn;
     });
 
-    it('should choose proper method to clear selection when dragging requested', () => {
+    it('should choose createTextRange() if available to clear selection when dragging requested', () => {
       const component = renderIntoDocument(2);
-      const fn = jest.fn();
+      const collapseFn = jest.fn();
+      const selectFn = jest.fn();
+      const emptyFn = jest.fn();
+      const removeAllRangesFn = jest.fn();
+      const selectionEmptyFn = jest.fn();
 
-      document.selection = { empty: fn };
-      ReactTestUtils.Simulate.mouseDown(component.splitter);
-      expect(fn).toHaveBeenCalledTimes(1);
-      fn.mockClear();
-      document.selection = null;
+      document.body.createTextRange = () => ({ collapse: collapseFn, select: selectFn });
+      window.getSelection = () => ({ empty: emptyFn, removeAllRanges: removeAllRangesFn });
+      document.selection = { empty: selectionEmptyFn };
 
-      window.getSelection = () => ({ empty: fn });
       ReactTestUtils.Simulate.mouseDown(component.splitter);
-      expect(fn).toHaveBeenCalledTimes(1);
-      fn.mockClear();
+      expect(collapseFn).toHaveBeenCalledTimes(1);
+      expect(selectFn).toHaveBeenCalledTimes(1);
+      expect(emptyFn).not.toHaveBeenCalled();
+      expect(removeAllRangesFn).not.toHaveBeenCalled();
+      expect(selectionEmptyFn).not.toHaveBeenCalled();
+    });
 
-      window.getSelection = () => ({ removeAllRanges: fn });
+    it('should choose getSelection().empty() if available to clear selection when dragging requested', () => {
+      const component = renderIntoDocument(2);
+      const emptyFn = jest.fn();
+      const removeAllRangesFn = jest.fn();
+      const selectionEmptyFn = jest.fn();
+
+      window.getSelection = () => ({ empty: emptyFn, removeAllRanges: removeAllRangesFn });
+      document.selection = { empty: selectionEmptyFn };
+
       ReactTestUtils.Simulate.mouseDown(component.splitter);
-      expect(fn).toHaveBeenCalledTimes(1);
-      fn.mockClear();
+      expect(emptyFn).toHaveBeenCalledTimes(1);
+      expect(removeAllRangesFn).not.toHaveBeenCalled();
+      expect(selectionEmptyFn).not.toHaveBeenCalled();
+    });
+
+    it('should choose getSelection().removeAllRanges() if available to clear selection when dragging requested', () => {
+      const component = renderIntoDocument(2);
+      const removeAllRangesFn = jest.fn();
+      const selectionEmptyFn = jest.fn();
+
+      window.getSelection = () => ({ removeAllRanges: removeAllRangesFn });
+      document.selection = { empty: selectionEmptyFn };
+
+      ReactTestUtils.Simulate.mouseDown(component.splitter);
+      expect(removeAllRangesFn).toHaveBeenCalledTimes(1);
+      expect(selectionEmptyFn).not.toHaveBeenCalled();
+    });
+
+    it('should choose getSelection() if available to clear selection when dragging requested', () => {
+      const component = renderIntoDocument(2);
+      const selectionEmptyFn = jest.fn();
 
       window.getSelection = () => ({});
+      document.selection = { empty: selectionEmptyFn };
+
       ReactTestUtils.Simulate.mouseDown(component.splitter);
-      expect(fn).not.toHaveBeenCalled();
-      fn.mockClear();
-      window.getSelection = null;
+      expect(selectionEmptyFn).not.toHaveBeenCalled();
+    });
+
+    it('should choose selection.empty() if available to clear selection when dragging requested', () => {
+      const component = renderIntoDocument(2);
+      const selectionEmptyFn = jest.fn();
+
+      document.selection = { empty: selectionEmptyFn };
+
+      ReactTestUtils.Simulate.mouseDown(component.splitter);
+      expect(selectionEmptyFn).toHaveBeenCalledTimes(1);
     });
 
     it('should trigger drag events when dragging starts and finishes', () => {
