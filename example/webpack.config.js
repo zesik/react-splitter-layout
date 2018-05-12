@@ -1,8 +1,8 @@
 const webpack = require('webpack');
 
 module.exports = {
+  mode: 'production',
   entry: [
-    'babel-polyfill',
     './javascripts/index.jsx'
   ],
   resolve: {
@@ -12,8 +12,8 @@ module.exports = {
     rules: [
       {
         test: /\.jsx?$/,
-        use: 'babel-loader',
-        exclude: /node_modules/
+        exclude: /node_modules/,
+        use: 'babel-loader'
       }, {
         test: /\.css$/,
         use: [
@@ -23,11 +23,8 @@ module.exports = {
       }
     ]
   },
-  plugins: [
-    new webpack.DefinePlugin({ 'process.env.NODE_ENV': JSON.stringify('production') }),
-    new webpack.optimize.UglifyJsPlugin()
-  ],
   output: {
+    path: __dirname,
     filename: 'bundle.js'
   }
 };
