@@ -1,87 +1,105 @@
 .splitter-layout {
-  position: absolute;
-  display: flex;
-  flex-direction: row;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-}
-
-.splitter-layout .layout-pane {
-  position: relative;
-  flex: 0 0 auto;
-  overflow: auto;
-}
-
-.splitter-layout .layout-pane.layout-pane-primary {
-  flex: 1 1 auto;
-}
-
-.splitter-layout > .layout-splitter {
-  flex: 0 0 auto;
-  width: 6px;
-  height: 100%;
-  cursor: col-resize;
-  background-color: #DDD;
+    position: absolute;
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+  }
   
-}
+  .splitter-layout .layout-pane {
+    position: relative;
+    flex: 0 0 auto;
+    overflow: auto;
+  }
+  
+  .splitter-layout .layout-pane.layout-pane-primary {
+    flex: 1 1 auto;
+  }
+  
+  .splitter-layout > .layout-splitter {
+    flex: 0 0 auto;
+    width: 6px;
+    height: 100%;
+    cursor: col-resize;
+    background-color: #DDD;
+    
+  }
+  
+  /*splitter*/
+  .splitter-layout  .layout-splitter:hover {
+    background-color: #C4E1A4;
+  }
+  .splitter-layout.row-resize-disable > .layout-splitter:hover {
+    background-color: #DDD;
+  }
+  .splitter-layout.col-resize-disable > .layout-splitter:hover {
+    background-color: #DDD;
+  }
+  
+  .splitter-layout.layout-changing {
+    cursor: col-resize;
+  }
+  
+  .splitter-layout.layout-changing > .layout-splitter {
+    background-color: #C4E1A4;
+  }
+  
+  .splitter-layout.splitter-layout-vertical {
+    flex-direction: column;
+  }
+  
+  .splitter-layout.splitter-layout-vertical.layout-changing {
+    cursor: row-resize;
+  }
+  /*resize no-allowed*/
+  .splitter-layout.col-resize-disable > .layout-splitter {
+    cursor: not-allowed;
+  }
+  .splitter-layout.row-resize-disable > .layout-splitter {
+    cursor: not-allowed;
+  }
+  
+  .splitter-layout.splitter-layout-vertical > .layout-splitter {
+    width: 100%;
+    height: 6px;
+    cursor: row-resize;
+  }
 
-.splitter-layout .layout-splitter:hover {
-  background-color: #C4E1A4;
-}
+  /*splitterButton*/
+  .layout-splitter > .splitterButton{
+    width: 6px;
+    height: 60px;
+    background-color: #BBB;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+  }
+  .layout-splitter > .splitterButton:hover{
+    background-color: #FC6;
+  }
 
-.splitter-layout.layout-changing {
-  cursor: col-resize;
-}
+  .splitter-layout.splitter-layout-vertical > .layout-splitter > .splitterButton:hover{
+    background-color: #FC6;
+  }
 
-.splitter-layout.layout-changing > .layout-splitter {
-  background-color: #C4E1A4;
-}
+  .splitter-layout.splitter-layout-vertical > .layout-splitter > .splitterButton{
+    width: 60px;
+    height: 6px;
+    margin: 0 auto;
+    background-color: #BBB;
+    position: initial; 
+    top: initial; 
+    transform: initial; 
+    cursor: pointer;
+  }
 
-.splitter-layout.splitter-layout-vertical {
-  flex-direction: column;
-}
 
-.splitter-layout.splitter-layout-vertical.layout-changing {
-  cursor: row-resize;
-}
-
-.splitter-layout.splitter-layout-vertical > .layout-splitter {
-  width: 100%;
-  height: 6px;
-  cursor: row-resize;
-}
-
-/*splitterButton*/
-.layout-splitter > .splitterButton{
-  width: 6px;
-  height: 60px;
-  background-color: #BBB;
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  cursor: pointer;
-}
-.layout-splitter > .splitterButton:hover{
-  background-color: #FC6;
-}
-.layout-splitter > .layout-pane.hide{
-  width: 0%;
-}
-.splitter-layout.splitter-layout-vertical > .layout-splitter > .layout-pane.hide{
-  height: 0%;
-}
-.splitter-layout.splitter-layout-vertical > .layout-splitter > .splitterButton{
-  width: 60px;
-  height: 6px;
-  margin: 0 auto;
-  background-color: #BBB;
-  position: initial; 
-  top: initial; 
-  transform: initial; 
-  cursor: pointer;
-}
-.splitter-layout.splitter-layout-vertical > .layout-splitter > .splitterButton:hover{
-  background-color: #FC6;
-}
-
+  .layout-splitter:active, .layout-splitter:hover, .splitter-layout > .layout-splitter_clone {
+    background-color: #ccc; }
+    
+  .splitter-layout > .layout-splitter_clone {
+    position: absolute;
+    opacity: .9;
+    z-index: 12000; }
