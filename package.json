@@ -54,6 +54,7 @@
     "prepublish": "webpack --progress -p",
     "build": "webpack --progress",
     "prepare": "npm run build",
+    "postinstall": "npm run build",
     "lint": "eslint '@(src|test|example)/**/*.js?'",
     "test": "jest",
     "coverage": "jest --coverage",
