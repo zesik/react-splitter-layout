@@ -10,7 +10,7 @@ import PercentageLayout from './components/PercentageLayout';
 import NestedLayout from './components/NestedLayout';
 import TogglableSidebarLayout from './components/TogglableSidebarLayout';
 import HorizontalLayoutWithEvents from './components/HorizontalLayoutWithEvents';
-import LayoutWithIFrame from './components/LayoutWithIFrame';
+import HorizontalLayoutWithIFrame from './components/HorizontalLayoutWithIFrame';
 import '../../lib/index.css';
 import '../stylesheets/index.css';
 
@@ -35,7 +35,7 @@ render(
         <Route path="/nested" component={NestedLayout} />
         <Route path="/sidebar" component={TogglableSidebarLayout} />
         <Route path="/events" component={HorizontalLayoutWithEvents} />
-        <Route path="/iframe" component={LayoutWithIFrame} />
+        <Route path="/iframe" component={HorizontalLayoutWithIFrame} />
         <Route path="*" component={NoMatch} />
       </Switch>
     </App>

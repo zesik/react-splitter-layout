@@ -1,8 +1,7 @@
 import React from 'react';
 import SplitterLayout from '../../../index';
-import Lorem from './Lorem';
 
-export default class LayoutWithIFrame extends React.Component {
+export default class HorizontalLayoutWithIFrame extends React.Component {
   constructor(props) {
     super(props);
     this.onDragStart = this.onDragStart.bind(this);
@@ -34,7 +33,7 @@ export default class LayoutWithIFrame extends React.Component {
           <ul>
             <li>
               <a
-                href="https://github.com/zesik/react-splitter-layout/blob/master/example/javascripts/components/LayoutWithIFrame.jsx"
+                href="https://github.com/zesik/react-splitter-layout/blob/master/example/javascripts/components/HorizontalLayoutWithIFrame.jsx"
               >
                 Source code of this page
               </a>
