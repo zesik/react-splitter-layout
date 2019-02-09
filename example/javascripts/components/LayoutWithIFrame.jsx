@@ -30,7 +30,21 @@ export default class LayoutWithIFrame extends React.Component {
             The 2nd pane on the right contains an <code>iframe</code> from <code>https://example.com</code>.
             A simple hack is used so that dragging is not interfered.
           </p>
-          <Lorem title="1st Pane" />
+          <p>Refer to the following pages for details:</p>
+          <ul>
+            <li>
+              <a
+                href="https://github.com/zesik/react-splitter-layout/blob/master/example/javascripts/components/LayoutWithIFrame.jsx"
+              >
+                Source code of this page
+              </a>
+            </li>
+            <li>
+              <a href="https://github.com/zesik/react-splitter-layout/issues/7">
+                Another way
+              </a>
+            </li>
+          </ul>
         </div>
         <div className="my-iframe">
           {this.state.dragging && <div className="my-iframe-overlay" />}
