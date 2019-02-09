@@ -29,6 +29,7 @@ class SplitterLayout extends React.Component {
     this.handleResize = this.handleResize.bind(this);
     this.handleMouseMove = this.handleMouseMove.bind(this);
     this.handleMouseUp = this.handleMouseUp.bind(this);
+    this.handleTouchMove = this.handleTouchMove.bind(this);
     this.handleSplitterMouseDown = this.handleSplitterMouseDown.bind(this);
     this.state = {
       secondaryPaneSize: 0,
@@ -40,6 +41,8 @@ class SplitterLayout extends React.Component {
     window.addEventListener('resize', this.handleResize);
     document.addEventListener('mouseup', this.handleMouseUp);
     document.addEventListener('mousemove', this.handleMouseMove);
+    document.addEventListener('touchend', this.handleMouseUp);
+    document.addEventListener('touchmove', this.handleTouchMove);
 
     let secondaryPaneSize;
     if (typeof this.props.secondaryInitialSize !== 'undefined') {
@@ -80,6 +83,8 @@ class SplitterLayout extends React.Component {
     window.removeEventListener('resize', this.handleResize);
     document.removeEventListener('mouseup', this.handleMouseUp);
     document.removeEventListener('mousemove', this.handleMouseMove);
+    document.removeEventListener('touchend', this.handleMouseUp);
+    document.removeEventListener('touchmove', this.handleTouchMove);
   }
 
   getSecondaryPaneSize(containerRect, splitterRect, clientPosition, offsetMouse) {
@@ -152,6 +157,10 @@ class SplitterLayout extends React.Component {
     }
   }
 
+  handleTouchMove(e) {
+    this.handleMouseMove(e.changedTouches[0]);
+  }
+
   handleSplitterMouseDown() {
     clearSelection();
     this.setState({ resizing: true });
@@ -202,6 +211,7 @@ class SplitterLayout extends React.Component {
             className="layout-splitter"
             ref={(c) => { this.splitter = c; }}
             onMouseDown={this.handleSplitterMouseDown}
+            onTouchStart={this.handleSplitterMouseDown}
           />
         }
         {wrappedChildren.length > 1 && wrappedChildren[1]}
