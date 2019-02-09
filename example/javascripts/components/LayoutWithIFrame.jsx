@@ -34,7 +34,7 @@ export default class LayoutWithIFrame extends React.Component {
         </div>
         <div className="my-iframe">
           {this.state.dragging && <div className="my-iframe-overlay" />}
-          <iframe src="https://example.com" />
+          <iframe src="https://example.com" title="example-iframe" />
         </div>
       </SplitterLayout>
     );
