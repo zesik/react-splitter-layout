@@ -44,7 +44,8 @@
     "react-test-renderer": "^16.0.0",
     "style-loader": "^0.23.1",
     "webpack": "^4.29.3",
-    "webpack-cli": "^3.2.3"
+    "webpack-cli": "^3.2.3",
+    "webpack-dev-server": "^3.1.14"
   },
   "peerDependencies": {
     "prop-types": "^15.5.0",
@@ -57,7 +58,8 @@
     "lint": "eslint '@(src|test|example)/**/*.js?'",
     "test": "jest",
     "coverage": "jest --coverage",
-    "coveralls": "jest --coverage && cat ./coverage/lcov.info | coveralls"
+    "coveralls": "jest --coverage && cat ./coverage/lcov.info | coveralls",
+    "example": "cd example && webpack-dev-server"
   },
   "jest": {
     "moduleNameMapper": {
