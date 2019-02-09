@@ -12,7 +12,7 @@ export default class TogglableSidebarLayout extends React.Component {
   }
 
   toggleSidebar() {
-    this.setState(state => ({ sidebarVisible: state.sidebarVisible }));
+    this.setState(state => ({ sidebarVisible: !state.sidebarVisible }));
   }
 
   render() {
