@@ -19,6 +19,7 @@ function App(props) {
             <li><NavLink to="/nested">Nested Layout</NavLink></li>
             <li><NavLink to="/sidebar">Sidebar</NavLink></li>
             <li><NavLink to="/events">Events</NavLink></li>
+            <li><NavLink to="/iframe">iframe</NavLink></li>
           </ul>
         </nav>
         <div className="child-content">
