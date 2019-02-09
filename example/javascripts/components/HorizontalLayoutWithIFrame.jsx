@@ -19,26 +19,6 @@ export default class HorizontalLayoutWithIFrame extends React.Component {
     this.setState({ dragging: false });
   }
 
-  render() {
-    return (
-      <SplitterLayout onDragStart={this.onDragStart} onDragEnd={this.onDragEnd}>
-        <div className="my-pane">
-          <h2>1st Pane</h2>
-          <p>
-            This is the 1st pane, and this is the primary pane by default.
-            The 2nd pane on the right contains an <code>iframe</code> from <code>https://example.com</code>.
-            A simple hack is used so that dragging is not interfered.
-          </p>
-          {this.renderDetailLinks()}
-        </div>
-        <div className="my-iframe">
-          {this.state.dragging && <div className="my-iframe-overlay" />}
-          <iframe src="https://example.com" title="example-iframe" />
-        </div>
-      </SplitterLayout>
-    );
-  }
-
   renderDetailLinks() {
     return (
       <p>
@@ -58,6 +38,26 @@ export default class HorizontalLayoutWithIFrame extends React.Component {
           </li>
         </ul>
       </p>
+    );
+  }
+
+  render() {
+    return (
+      <SplitterLayout onDragStart={this.onDragStart} onDragEnd={this.onDragEnd}>
+        <div className="my-pane">
+          <h2>1st Pane</h2>
+          <p>
+            This is the 1st pane, and this is the primary pane by default.
+            The 2nd pane on the right contains an <code>iframe</code> from <code>https://example.com</code>.
+            A simple hack is used so that dragging is not interfered.
+          </p>
+          {this.renderDetailLinks()}
+        </div>
+        <div className="my-iframe">
+          {this.state.dragging && <div className="my-iframe-overlay" />}
+          <iframe src="https://example.com" title="example-iframe" />
+        </div>
+      </SplitterLayout>
     );
   }
 }

@@ -5,6 +5,7 @@ module.exports = {
     'jest': true
   },
   'rules': {
+    'class-methods-use-this': [0],
     'comma-dangle': [2, 'never'],
     "function-paren-newline": [2, 'consistent'],
     'max-len': [2, 120, 2, {
