@@ -147,7 +147,7 @@ The `SplitterLayout` component supports the following props.
 ## Release History
 
 * 4.0.0
-  * Stylesheets are no longer integrated by default. It has to be handled in your favorite way.
+  * Stylesheets are no longer integrated by default. It has to be handled in your favorite way explicitly.
 * 3.0.0
   * Add dragging and size change events.
   * Drop support of React earlier than 15.5.0.
