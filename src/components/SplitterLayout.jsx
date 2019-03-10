@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Pane from './Pane';
-import '../stylesheets/index.css';
 
 function clearSelection() {
   if (document.body.createTextRange) {
@@ -206,13 +205,15 @@ class SplitterLayout extends React.Component {
       <div className={containerClasses} ref={(c) => { this.container = c; }}>
         {wrappedChildren[0]}
         {wrappedChildren.length > 1 &&
-          <div
-            role="separator"
-            className="layout-splitter"
-            ref={(c) => { this.splitter = c; }}
-            onMouseDown={this.handleSplitterMouseDown}
-            onTouchStart={this.handleSplitterMouseDown}
-          />
+          (
+            <div
+              role="separator"
+              className="layout-splitter"
+              ref={(c) => { this.splitter = c; }}
+              onMouseDown={this.handleSplitterMouseDown}
+              onTouchStart={this.handleSplitterMouseDown}
+            />
+          )
         }
         {wrappedChildren.length > 1 && wrappedChildren[1]}
       </div>

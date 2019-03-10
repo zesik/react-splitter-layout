@@ -1,5 +1,6 @@
 const { resolve } = require('path');
 const webpack = require('webpack');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
   mode: 'production',
@@ -7,7 +8,7 @@ module.exports = {
     './index.js'
   ],
   resolve: {
-    extensions: ['.js', '.jsx', '.css']
+    extensions: ['.js', '.jsx']
   },
   module: {
     rules: [
@@ -15,15 +16,17 @@ module.exports = {
         test: /\.jsx?$/,
         exclude: /node_modules/,
         use: 'babel-loader'
-      }, {
-        test: /\.css$/,
-        use: [
-          'style-loader',
-          'css-loader'
-        ]
       }
     ]
   },
+  plugins: [
+    new CopyWebpackPlugin([
+      {
+        from: 'src/stylesheets/*',
+        flatten: true
+      }
+    ])
+  ],
   output: {
     path: resolve(__dirname, 'lib'),
     filename: 'index.js',

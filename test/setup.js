@@ -12,6 +12,14 @@ document.simulateMouseMove = (clientX, clientY) => {
   document.dispatchEvent(new MouseEvent('mousemove', { clientX, clientY }));
 };
 
+document.simulateTouchEnd = () => {
+  document.dispatchEvent(new TouchEvent('touchend'));
+};
+
+document.simulateTouchMove = (clientX, clientY) => {
+  document.dispatchEvent(new TouchEvent('touchmove', { changedTouches: [{ clientX, clientY }] }));
+};
+
 window.resizeTo = (width, height) => {
   window.innerWidth = width;
   window.innerHeight = height;
