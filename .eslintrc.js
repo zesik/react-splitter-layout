@@ -11,6 +11,7 @@ module.exports = {
     'max-len': [2, 120, 2, {
       'ignoreUrls': true
     }],
+    "no-confusing-arrow": [2, { "allowParens": true }],
     'no-multiple-empty-lines': [1, { 'max': 1 }],
     'no-plusplus': [0],
     'object-curly-newline': [0],

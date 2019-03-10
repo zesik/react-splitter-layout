@@ -166,7 +166,7 @@ class SplitterLayout extends React.Component {
   }
 
   handleMouseUp() {
-    this.setState(prevState => prevState.resizing ? { resizing: false } : null);
+    this.setState(prevState => (prevState.resizing ? { resizing: false } : null));
   }
 
   render() {
