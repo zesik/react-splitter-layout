@@ -268,6 +268,78 @@ describe('SplitterLayout', () => {
       expect(getSecondaryPaneSize(containerRect, splitterRect, position, false)).toBe(25);
     });
 
+    it('should get correct secondary pane size when horizontal, pixel sizing, rtl and first child as primary', () => {
+      const component = {
+        props: {
+          vertical: false,
+          percentage: false,
+          primaryIndex: 0,
+          primaryMinSize: 0,
+          secondaryMinSize: 0
+        }
+      };
+      const getSecondaryPaneSize = SplitterLayout.prototype.getSecondaryPaneSize.bind(component);
+      const containerRect = { top: 0, left: 0, width: 1024, height: 512 };
+      const splitterRect = { top: 0, left: 40, width: 4, height: 512 };
+      const position = { left: 50, top: 200 };
+      expect(getSecondaryPaneSize(containerRect, splitterRect, position, true, true)).toBe(48);
+      expect(getSecondaryPaneSize(containerRect, splitterRect, position, false, true)).toBe(50);
+    });
+
+    it('should get correct secondary pane size when vertical, pixel sizing, rtl and first child as primary', () => {
+      const component = {
+        props: {
+          vertical: true,
+          percentage: false,
+          primaryIndex: 0,
+          primaryMinSize: 0,
+          secondaryMinSize: 0
+        }
+      };
+      const getSecondaryPaneSize = SplitterLayout.prototype.getSecondaryPaneSize.bind(component);
+      const containerRect = { top: 0, left: 0, width: 1024, height: 512 };
+      const splitterRect = { top: 40, left: 0, width: 1024, height: 4 };
+      const position = { left: 50, top: 200 };
+      expect(getSecondaryPaneSize(containerRect, splitterRect, position, true, true)).toBe(310);
+      expect(getSecondaryPaneSize(containerRect, splitterRect, position, false, true)).toBe(308);
+    });
+
+    it('should get correct secondary pane size when horizontal, pixel sizing, rtl and second child as primary', () => {
+      const component = {
+        props: {
+          vertical: false,
+          percentage: false,
+          primaryIndex: 1,
+          primaryMinSize: 0,
+          secondaryMinSize: 0
+        }
+      };
+      const getSecondaryPaneSize = SplitterLayout.prototype.getSecondaryPaneSize.bind(component);
+      const containerRect = { top: 0, left: 0, width: 1024, height: 512 };
+      const splitterRect = { top: 0, left: 40, width: 4, height: 512 };
+      const position = { left: 50, top: 200 };
+      expect(getSecondaryPaneSize(containerRect, splitterRect, position, true, true)).toBe(972);
+      expect(getSecondaryPaneSize(containerRect, splitterRect, position, false, true)).toBe(970);
+    });
+
+    it('should get correct secondary pane size when vertical, pixel sizing, rtl and second child as primary', () => {
+      const component = {
+        props: {
+          vertical: true,
+          percentage: false,
+          primaryIndex: 1,
+          primaryMinSize: 0,
+          secondaryMinSize: 0
+        }
+      };
+      const getSecondaryPaneSize = SplitterLayout.prototype.getSecondaryPaneSize.bind(component);
+      const containerRect = { top: 0, left: 0, width: 1024, height: 512 };
+      const splitterRect = { top: 40, left: 0, width: 1024, height: 4 };
+      const position = { left: 50, top: 200 };
+      expect(getSecondaryPaneSize(containerRect, splitterRect, position, true, true)).toBe(198);
+      expect(getSecondaryPaneSize(containerRect, splitterRect, position, false, true)).toBe(200);
+    });
+
     it('should adjust the pane size when exceeds limit', () => {
       const component = {
         props: {

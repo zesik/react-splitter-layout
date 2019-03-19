@@ -20,6 +20,10 @@ function clearSelection() {
   }
 }
 
+function isRtl(element) {
+  return window.getComputedStyle && window.getComputedStyle(element).direction === 'rtl';
+}
+
 const DEFAULT_SPLITTER_SIZE = 4;
 
 class SplitterLayout extends React.Component {
@@ -86,7 +90,7 @@ class SplitterLayout extends React.Component {
     document.removeEventListener('touchmove', this.handleTouchMove);
   }
 
-  getSecondaryPaneSize(containerRect, splitterRect, clientPosition, offsetMouse) {
+  getSecondaryPaneSize(containerRect, splitterRect, clientPosition, offsetMouse, rtl) {
     let totalSize;
     let splitterSize;
     let offset;
@@ -109,7 +113,7 @@ class SplitterLayout extends React.Component {
     }
 
     let secondaryPaneSize;
-    if (this.props.primaryIndex === 1) {
+    if ((this.props.primaryIndex === 1) === (!rtl || this.props.vertical)) {
       secondaryPaneSize = offset;
     } else {
       secondaryPaneSize = totalSize - splitterSize - offset;
@@ -138,7 +142,7 @@ class SplitterLayout extends React.Component {
       const secondaryPaneSize = this.getSecondaryPaneSize(containerRect, splitterRect, {
         left: splitterRect.left,
         top: splitterRect.top
-      }, false);
+      }, false, isRtl(this.container));
       this.setState({ secondaryPaneSize });
     }
   }
@@ -150,7 +154,7 @@ class SplitterLayout extends React.Component {
       const secondaryPaneSize = this.getSecondaryPaneSize(containerRect, splitterRect, {
         left: e.clientX,
         top: e.clientY
-      }, true);
+      }, true, isRtl(this.container));
       clearSelection();
       this.setState({ secondaryPaneSize });
     }
