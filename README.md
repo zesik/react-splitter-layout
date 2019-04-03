@@ -13,7 +13,7 @@ A simple split layout for React and modern browsers.
 
 ## Dependencies
 
-React-splitter-layout depends on React and prop-types. See [package.json](package.json) for more details.
+React-splitter-layout depends on React and prop-types. See [package.json](package.json#L50-L53) for more details.
 
 ## Installation
 
