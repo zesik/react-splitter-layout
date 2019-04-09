@@ -5,7 +5,7 @@ function Pane(props) {
   const size = props.size || 0;
   const unit = props.percentage ? '%' : 'px';
   let classes = 'layout-pane';
-  const style = {};
+  const style = {'display': 'flex'};
   if (!props.primary) {
     if (props.vertical) {
       style.height = `${size}${unit}`;
