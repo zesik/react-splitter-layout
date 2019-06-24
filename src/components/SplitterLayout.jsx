@@ -171,6 +171,7 @@ class SplitterLayout extends React.Component {
 
   render() {
     let containerClasses = 'splitter-layout';
+    const { secondaryMinSize } = this.props;
     if (this.props.customClassName) {
       containerClasses += ` ${this.props.customClassName}`;
     }
@@ -193,6 +194,9 @@ class SplitterLayout extends React.Component {
       if (children.length > 1 && i !== primaryIndex) {
         primary = false;
         size = this.state.secondaryPaneSize;
+      }
+      if (size < secondaryMinSize) {
+        size = secondaryMinSize;
       }
       wrappedChildren.push(
         <Pane vertical={this.props.vertical} percentage={this.props.percentage} primary={primary} size={size}>
