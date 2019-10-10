@@ -8,7 +8,6 @@
 # Build Output
 build/
 coverage/
-lib/
 .nyc_output/
 
 # NPM
