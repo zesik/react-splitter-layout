@@ -58,27 +58,29 @@ export default class TogglableSidebarLayout extends React.Component {
 
           <Lorem title="1st Pane" />
         </div>
-        <div className="my-pane">
-          <h2>2nd Pane</h2>
-          <p>This is the 2nd pane, considered as a sidebar.</p>
-          {!this.state.useSecondaryHidden && (
-            <pre>
-              &lt;SplitterLayout primaryIndex={'{0}'}&gt;{'\n'}
-              &nbsp;&nbsp;&lt;div&gt;1st&lt;/div&gt;{'\n'}
-              &nbsp;&nbsp;<strong>&lt;div&gt;2nd&lt;/div&gt;</strong>{'\n'}
-              &lt;/SplitterLayout&gt;
-            </pre>
-          )}
-          {this.state.useSecondaryHidden && (
-            <pre>
-              &lt;SplitterLayout primaryIndex={'{0}'} secondaryHidden={`{${!this.state.sidebarVisible}}`}&gt;{'\n'}
-              &nbsp;&nbsp;&lt;div&gt;1st&lt;/div&gt;{'\n'}
-              &nbsp;&nbsp;<strong>&lt;div&gt;2nd&lt;/div&gt;</strong>{'\n'}
-              &lt;/SplitterLayout&gt;
-            </pre>
-          )}
-          <Lorem title="2nd Pane" />
-        </div>
+        {(this.state.sidebarVisible || this.state.useSecondaryHidden) && (
+          <div className="my-pane">
+            <h2>2nd Pane</h2>
+            <p>This is the 2nd pane, considered as a sidebar.</p>
+            {!this.state.useSecondaryHidden && (
+              <pre>
+                &lt;SplitterLayout primaryIndex={'{0}'}&gt;{'\n'}
+                &nbsp;&nbsp;&lt;div&gt;1st&lt;/div&gt;{'\n'}
+                &nbsp;&nbsp;<strong>&lt;div&gt;2nd&lt;/div&gt;</strong>{'\n'}
+                &lt;/SplitterLayout&gt;
+              </pre>
+            )}
+            {this.state.useSecondaryHidden && (
+              <pre>
+                &lt;SplitterLayout primaryIndex={'{0}'} secondaryHidden={`{${!this.state.sidebarVisible}}`}&gt;{'\n'}
+                &nbsp;&nbsp;&lt;div&gt;1st&lt;/div&gt;{'\n'}
+                &nbsp;&nbsp;<strong>&lt;div&gt;2nd&lt;/div&gt;</strong>{'\n'}
+                &lt;/SplitterLayout&gt;
+              </pre>
+            )}
+            <Lorem title="2nd Pane" />
+          </div>
+        )}
       </SplitterLayout>
     );
   }
