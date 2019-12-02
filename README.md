@@ -124,6 +124,12 @@ The `SplitterLayout` component supports the following props.
     If this prop is not defined, `SplitterLayout` tries to split the layout with equal sizes.
     (Note: equal size may not apply when there are nested layouts.)
 
+* `secondaryHidden: PropTypes.bool`
+
+    Determine whether the secondary pane is visible or not. The default value is `false`.
+
+    Use this prop for hiding the secondary pane in favour of conditional rendering to avoid re-renders.
+
 * `onDragStart: PropTypes.func`
 
     Called when dragging is started.

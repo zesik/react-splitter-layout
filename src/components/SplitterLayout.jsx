@@ -190,12 +190,20 @@ class SplitterLayout extends React.Component {
     for (let i = 0; i < children.length; ++i) {
       let primary = true;
       let size = null;
+      let hidden = false;
       if (children.length > 1 && i !== primaryIndex) {
         primary = false;
         size = this.state.secondaryPaneSize;
+        hidden = this.props.secondaryHidden === true;
       }
       wrappedChildren.push(
-        <Pane vertical={this.props.vertical} percentage={this.props.percentage} primary={primary} size={size}>
+        <Pane
+          vertical={this.props.vertical}
+          percentage={this.props.percentage}
+          primary={primary}
+          size={size}
+          hidden={hidden}
+        >
           {children[i]}
         </Pane>
       );
@@ -204,7 +212,7 @@ class SplitterLayout extends React.Component {
     return (
       <div className={containerClasses} ref={(c) => { this.container = c; }}>
         {wrappedChildren[0]}
-        {wrappedChildren.length > 1 &&
+        {!this.props.secondaryHidden && wrappedChildren.length > 1 &&
           (
             <div
               role="separator"
@@ -215,7 +223,7 @@ class SplitterLayout extends React.Component {
             />
           )
         }
-        {wrappedChildren.length > 1 && wrappedChildren[1]}
+        {wrappedChildren[1] || false}
       </div>
     );
   }
@@ -229,6 +237,7 @@ SplitterLayout.propTypes = {
   primaryMinSize: PropTypes.number,
   secondaryInitialSize: PropTypes.number,
   secondaryMinSize: PropTypes.number,
+  secondaryHidden: PropTypes.bool,
   onDragStart: PropTypes.func,
   onDragEnd: PropTypes.func,
   onSecondaryPaneSizeChange: PropTypes.func,
@@ -243,6 +252,7 @@ SplitterLayout.defaultProps = {
   primaryMinSize: 0,
   secondaryInitialSize: undefined,
   secondaryMinSize: 0,
+  secondaryHidden: false,
   onDragStart: null,
   onDragEnd: null,
   onSecondaryPaneSizeChange: null,
