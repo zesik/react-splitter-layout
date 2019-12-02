@@ -121,6 +121,24 @@ describe('SplitterLayout', () => {
       expect(output.props.children[2].props.primary).toBe(false);
       expect(output.props.children[2].props.percentage).toBe(false);
     });
+
+    it('should render 2 children when 2 children provided and secondaryHidden is true', () => {
+      const output = render(2, { secondaryHidden: true });
+      expect(output.type).toBe('div');
+      expect(output.props.className).toBe('splitter-layout');
+      expect(output.props.children.length).toBe(3);
+      expect(output.props.children[0].type).toBe(Pane);
+      expect(output.props.children[0].props.vertical).toBe(false);
+      expect(output.props.children[0].props.primary).toBe(true);
+      expect(output.props.children[0].props.percentage).toBe(false);
+      expect(output.props.children[0].props.hidden).toBe(false);
+      expect(output.props.children[1]).toBe(false);
+      expect(output.props.children[2].type).toBe(Pane);
+      expect(output.props.children[2].props.vertical).toBe(false);
+      expect(output.props.children[2].props.primary).toBe(false);
+      expect(output.props.children[2].props.percentage).toBe(false);
+      expect(output.props.children[2].props.hidden).toBe(true);
+    });
   });
 
   describe('sizing', () => {
@@ -549,6 +567,11 @@ describe('SplitterLayout', () => {
     it('should initialize vertical secondary size if requested even when splitter is not rendered', () => {
       const component = renderIntoDocument(2, { secondaryInitialSize: 20, vertical: true });
       expect(component.state.secondaryPaneSize).toBe(20);
+    });
+
+    it('should set secondary size to zero if secondary is hidden', () => {
+      const component = renderIntoDocument(2, { secondaryHidden: true });
+      expect(component.state.secondaryPaneSize).toBe(-4);
     });
   });
 });
