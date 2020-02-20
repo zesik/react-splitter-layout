@@ -50,7 +50,7 @@ $ npm run coverage
     ```
 
 2. Include the library into your code and use it.
-
+   Note: For upgrading from v3.0.1 to v4.0.0 need to explicitly import css file. In v3.0.1 it was required to be imported
     ```javascript
     import React from 'react';
     import SplitterLayout from 'react-splitter-layout';
