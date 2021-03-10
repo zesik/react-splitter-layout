@@ -63,6 +63,11 @@ class SplitterLayout extends React.Component {
     this.setState({ secondaryPaneSize });
   }
 
+  // Used externally to set the position of the splitter
+  setSplitterPosition(secondaryPaneSize) {
+    this.setState({ secondaryPaneSize });
+  }
+
   componentDidUpdate(prevProps, prevState) {
     if (prevState.secondaryPaneSize !== this.state.secondaryPaneSize && this.props.onSecondaryPaneSizeChange) {
       this.props.onSecondaryPaneSizeChange(this.state.secondaryPaneSize);
@@ -212,7 +217,9 @@ class SplitterLayout extends React.Component {
               ref={(c) => { this.splitter = c; }}
               onMouseDown={this.handleSplitterMouseDown}
               onTouchStart={this.handleSplitterMouseDown}
-            />
+            >
+              {this.props.splitterChildren}
+            </div>
           )
         }
         {wrappedChildren.length > 1 && wrappedChildren[1]}
@@ -232,7 +239,8 @@ SplitterLayout.propTypes = {
   onDragStart: PropTypes.func,
   onDragEnd: PropTypes.func,
   onSecondaryPaneSizeChange: PropTypes.func,
-  children: PropTypes.arrayOf(PropTypes.node)
+  children: PropTypes.arrayOf(PropTypes.node),
+  splitterChildren: PropTypes.arrayOf(PropTypes.node)
 };
 
 SplitterLayout.defaultProps = {
@@ -246,7 +254,8 @@ SplitterLayout.defaultProps = {
   onDragStart: null,
   onDragEnd: null,
   onSecondaryPaneSizeChange: null,
-  children: []
+  children: [],
+  splitterChildren: []
 };
 
 export default SplitterLayout;
