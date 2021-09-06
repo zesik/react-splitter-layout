@@ -551,27 +551,6 @@ describe('SplitterLayout', () => {
       expect(component.state.secondaryPaneSize).toBe(20);
     });
 
-
-    it('should trigger size change events when props are changed', () => {
-      const fn = jest.fn();
-      const ref = React.createRef();
-      const component = renderIntoDocument(2, { secondaryInitialSize: 20, onSecondaryPaneSizeChange: fn, ref: ref });
-      expect(fn).toHaveBeenCalledTimes(1);
-      expect(fn).toHaveBeenCalledWith(20);
-      const rectFn = component.container.getBoundingClientRect;
-      component.container.getBoundingClientRect = () => ({ left: 0, top: 0, width: 200, height: 300 });
-      ReactTestUtils.Simulate.touchStart(component.splitter);
-      document.simulateTouchMove(25, 30);
-      expect(fn).toHaveBeenCalledTimes(2);
-      expect(fn).toHaveBeenCalledWith(175);
-      component.container.getBoundingClientRect = rectFn;
-      // component.props.secondaryInitialSize = 75;
-      ReactTestUtils.Simulate.change(component, { target: { value: "whamo" } })
-      component.rerender();
-
-
-    });
-
     it('should trigger size change events when props are changed 2', () => {
       const fn = jest.fn();
       const ref = React.createRef();
@@ -620,54 +599,6 @@ describe('SplitterLayout', () => {
       // component.rerender();
 
 
-    });
-
-    it('should trigger size change events when props are changed 3', () => {
-      // const output = render(2, {
-      //   customClassName: 'custom-class',
-      //   vertical: true,
-      //   percentage: true,
-      //   primaryIndex: 1,
-      //   secondaryInitialSize: 75
-      // });
-      // expect(output.type).toBe('div');
-
-      let props = {
-        customClassName: 'custom-class',
-        vertical: true,
-        percentage: true,
-        primaryIndex: 1,
-        secondaryInitialSize: 25
-      };
-      const children = Array.apply(null, {length: 2}).map((_, i) => <div key={i}>Child #{i}</div>);
-      const renderer = new ShallowRenderer();
-      const {container, getRenderOutput, ...other } = renderer.render(<SplitterLayout {...props}>{children}</SplitterLayout>);
-      // const container = renderer.container;
-
-      props.secondaryInitialSize = 75;
-
-      console.log('renderer', renderer);
-
-
-      // const {conatiner} = render(<Foo bar={true} />)
-      //
-      // // update the props, re-render to the same container
-      const result = renderer.render(<SplitterLayout {...props}>{children}</SplitterLayout>, {container});
-
-      console.log('result', result);
-      console.log('result', result.getRederOutput());
-      // expect(output.props.className).toBe('splitter-layout custom-class splitter-layout-vertical');
-      // expect(output.props.children.length).toBe(3);
-      // expect(output.props.children[0].type).toBe(Pane);
-      // expect(output.props.children[0].props.vertical).toBe(true);
-      // expect(output.props.children[0].props.primary).toBe(false);
-      // expect(output.props.children[0].props.percentage).toBe(true);
-      // expect(output.props.children[1].type).toBe('div');
-      // expect(output.props.children[1].props.className).toBe('layout-splitter');
-      // expect(output.props.children[2].type).toBe(Pane);
-      // expect(output.props.children[2].props.vertical).toBe(true);
-      // expect(output.props.children[2].props.primary).toBe(true);
-      // expect(output.props.children[2].props.percentage).toBe(true);
     });
   });
 });
