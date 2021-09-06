@@ -550,5 +550,55 @@ describe('SplitterLayout', () => {
       const component = renderIntoDocument(2, { secondaryInitialSize: 20, vertical: true });
       expect(component.state.secondaryPaneSize).toBe(20);
     });
+
+    it('should trigger size change events when props are changed 2', () => {
+      const fn = jest.fn();
+      const ref = React.createRef();
+
+      let props = {
+        customClassName: 'custom-class',
+        vertical: true,
+        percentage: true,
+        primaryIndex: 1,
+        secondaryInitialSize: 20,
+        onSecondaryPaneSizeChange: fn,
+        ref: ref
+      };
+      const children = Array.apply(null, { length: 2 }).map((_, i) => <div key={i}>Child #{i}</div>);
+      const componentPreRerender = ReactTestUtils.renderIntoDocument(<SplitterLayout {...props}>{children}</SplitterLayout>);
+      // return component;
+      // const fn2 = componentPreRerender.container.getBoundingClientRect;
+      // componentPreRerender.container.getBoundingClientRect = () => ({ left: 0, top: 0, width: 200, height: 300 });
+      // ReactTestUtils.Simulate.mouseDown(componentPreRerender.splitter);
+      // document.simulateMouseMove(25, 30);
+      // expect(componentPreRerender.state.secondaryPaneSize).toBe(10);
+      // // ReactDOM.unmountComponentAtNode(ReactDOM.findDOMNode(componentPreRerender).parentNode);
+      // componentPreRerender.container.getBoundingClientRect = fn2;
+
+
+      // props.secondaryInitialSize = 75;
+
+      componentPreRerender.props = { ...componentPreRerender.props, secondaryInitialSize: 80 };
+      componentPreRerender.componentDidUpdate(props, componentPreRerender.state);
+
+
+      // const componentPreRerender = ReactTestUtils.renderIntoDocument(<SplitterLayout {...props}>{children}</SplitterLayout>, ReactDOM.findDOMNode(componentPreRerender).parentNode);
+
+      // const component = renderIntoDocument(2, { secondaryInitialSize: 20, onSecondaryPaneSizeChange: fn, ref: ref });
+      expect(fn).toHaveBeenCalledTimes(2);
+      expect(fn).toHaveBeenCalledWith(20);
+      const rectFn = componentPreRerender.container.getBoundingClientRect;
+      componentPreRerender.container.getBoundingClientRect = () => ({ left: 0, top: 0, width: 200, height: 300 });
+      ReactTestUtils.Simulate.touchStart(componentPreRerender.splitter);
+      document.simulateTouchMove(25, 30);
+      expect(fn).toHaveBeenCalledTimes(3);
+      expect(fn).toHaveBeenCalledWith(80);
+      componentPreRerender.container.getBoundingClientRect = rectFn;
+      // component.props.secondaryInitialSize = 75;
+      // ReactTestUtils.Simulate.change(component, { target: { value: "whamo" } })
+      // component.rerender();
+
+
+    });
   });
 });

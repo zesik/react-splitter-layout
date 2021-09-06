@@ -13,6 +13,7 @@ function constructLinks() {
       <li><NavLink to="/sidebar">Sidebar</NavLink></li>
       <li><NavLink to="/events">Events</NavLink></li>
       <li><NavLink to="/iframe">iframe</NavLink></li>
+      <li><NavLink to="/secondaryDefaultSizeChange">Default Size Change</NavLink></li>
     </ul>
   );
 }
