@@ -43,24 +43,7 @@ class SplitterLayout extends React.Component {
     document.addEventListener('touchend', this.handleMouseUp);
     document.addEventListener('touchmove', this.handleTouchMove);
 
-    let secondaryPaneSize;
-    if (typeof this.props.secondaryInitialSize !== 'undefined') {
-      secondaryPaneSize = this.props.secondaryInitialSize;
-    } else {
-      const containerRect = this.container.getBoundingClientRect();
-      let splitterRect;
-      if (this.splitter) {
-        splitterRect = this.splitter.getBoundingClientRect();
-      } else {
-        // Simulate a splitter
-        splitterRect = { width: DEFAULT_SPLITTER_SIZE, height: DEFAULT_SPLITTER_SIZE };
-      }
-      secondaryPaneSize = this.getSecondaryPaneSize(containerRect, splitterRect, {
-        left: containerRect.left + ((containerRect.width - splitterRect.width) / 2),
-        top: containerRect.top + ((containerRect.height - splitterRect.height) / 2)
-      }, false);
-    }
-    this.setState({ secondaryPaneSize });
+    this.setSecondaryPaneSize();
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -75,6 +58,9 @@ class SplitterLayout extends React.Component {
       } else if (this.props.onDragEnd) {
         this.props.onDragEnd();
       }
+    }
+    if (prevProps.secondaryInitialSize !== this.props.secondaryInitialSize){
+      this.setSecondaryPaneSize();
     }
   }
 
@@ -167,6 +153,27 @@ class SplitterLayout extends React.Component {
 
   handleMouseUp() {
     this.setState(prevState => (prevState.resizing ? { resizing: false } : null));
+  }
+
+  setSecondaryPaneSize(){
+    let secondaryPaneSize;
+    if (typeof this.props.secondaryInitialSize !== 'undefined') {
+      secondaryPaneSize = this.props.secondaryInitialSize;
+    } else {
+      const containerRect = this.container.getBoundingClientRect();
+      let splitterRect;
+      if (this.splitter) {
+        splitterRect = this.splitter.getBoundingClientRect();
+      } else {
+        // Simulate a splitter
+        splitterRect = { width: DEFAULT_SPLITTER_SIZE, height: DEFAULT_SPLITTER_SIZE };
+      }
+      secondaryPaneSize = this.getSecondaryPaneSize(containerRect, splitterRect, {
+        left: containerRect.left + ((containerRect.width - splitterRect.width) / 2),
+        top: containerRect.top + ((containerRect.height - splitterRect.height) / 2)
+      }, false);
+    }
+    this.setState({ secondaryPaneSize });
   }
 
   render() {
